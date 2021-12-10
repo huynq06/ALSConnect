@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "21855797468",
+    "firebase_url": "https://rn-complete-guide-6c06b-default-rtdb.firebaseio.com",
+    "project_id": "rn-complete-guide-6c06b",
+    "storage_bucket": "rn-complete-guide-6c06b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21855797468:android:dc460d7237b9f87dd9f419",
+        "android_client_info": {
+          "package_name": "com.Als.ALSConnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21855797468-cknmuuftbdpvqv2c0a8sk4n0va214mal.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI63bWDFZvWXdmWhPqLy6RrmQx6o6WePA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21855797468-cknmuuftbdpvqv2c0a8sk4n0va214mal.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21855797468:android:2175ef3f50a9dcb8d9f419",
+        "android_client_info": {
+          "package_name": "com.alsconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21855797468-cknmuuftbdpvqv2c0a8sk4n0va214mal.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI63bWDFZvWXdmWhPqLy6RrmQx6o6WePA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21855797468-cknmuuftbdpvqv2c0a8sk4n0va214mal.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

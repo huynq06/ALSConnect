@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ALSConnect</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">D46dpHPyOdTywvNySJ1uLL0IyaFdTIqyFdCi2</string>
+</resources>
