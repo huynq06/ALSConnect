@@ -4,7 +4,6 @@ import axios from 'axios';
 
 
 export function* handleApiRequest(action){
-    console.log('da chay vao handleApiRequest')
     try{
         const apiConfig = {
             method: 'post',
@@ -14,10 +13,8 @@ export function* handleApiRequest(action){
             }
           };
           const response = yield call(axios, apiConfig);
-          console.log(response);
           yield put({type: 'API_REQUEST_SUCCEEDED', payload: response.data });
     }catch(e){
-        console.log(e);
         yield put({type: 'API_REQUEST_FAILED', payload: e.message });
     }
 }

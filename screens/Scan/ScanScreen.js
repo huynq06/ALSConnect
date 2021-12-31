@@ -1,225 +1,151 @@
-import React,{useState,useEffect} from "react";
-import {View,Text,TouchableOpacity,ActivityIndicator,StyleSheet,Keyboard,Image} from 'react-native'
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as authActions from  '../../stores/actions/auth';
-import { useDispatch } from 'react-redux';
-import {
-    COLORS,
-    SIZES,
-    FONTS,
-    icons,
-    images,
-    dummyData,
-  } from "../../constants";
-  import {RNCamera} from 'react-native-camera'
-const ScanScreen = ({navigation}) =>{
-    const [isLoading, setIsLoading] = useState(false);
-  if (isLoading) {
-    return (
-      <View style={styles.centered}>
-        <ActivityIndicator size="large" color={COLORS.blue} />
-      </View>
-    );
+import React, { Component } from "react";
+
+import { View, Dimensions, Text, Alert,Image } from "react-native";
+import QRCodeScanner from "react-native-qrcode-scanner";
+import Icon from "react-native-vector-icons/Ionicons";
+import * as Animatable from "react-native-animatable";
+import {COLORS, icons} from '../../constants'
+const SCREEN_HEIGHT = Dimensions.get("window").height;
+const SCREEN_WIDTH = Dimensions.get("window").width;
+
+/* console.disableYellowBox = true; */
+
+const ScanScreen = ({navigation}) => {
+  const scanner = React.useRef()
+ const onSuccess = (e) =>{
+    console.log(e.data)
+    navigation.navigate('ScanDetail',{stk:e.data})
+    scanner.current?.reactivate();
   }
-  function renderScanFocus() {
-    return (
-        <View
-            style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center'
-            }}
-        >
-            <Image
-                source={images.focus}
-                resizeMode="stretch"
-                style={{
-                    marginTop: "-55%",
-                    width: 200,
-                    height: 300
-                }}
-            />
-        </View>
-    )
-}
-function onBarCodeRead(result) {
-    alert(result.data)
-   // console.log(result.data)
-}
-function renderPaymentMethods() {
-    return (
-        <View
-            style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: 220,
-                padding: SIZES.padding * 3,
-                borderTopLeftRadius: SIZES.radius,
-                borderTopRightRadius: SIZES.radius,
-                backgroundColor: COLORS.white
-            }}
-        >
-            <Text style={{ ...FONTS.h4 }}>Another payment methods</Text>
+console.log('Scan Screen Start!!!')
+const   makeSlideOutTranslation = (translationType, fromValue) => {
+    return {
+      from: {
+        [translationType]: SCREEN_WIDTH * -0.18
+      },
+      to: {
+        [translationType]: fromValue
+      }
+    };
+  }
 
-            <View
-                style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    alignItems: 'flex-start',
-                    marginTop: SIZES.padding * 2
-                }}
-            >
-                <TouchableOpacity
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center'
-                    }}
-                    onPress={() => console.log("Phone Number")}
-                >
-                    <View
-                        style={{
-                            width: 40,
-                            height: 40,
-                            backgroundColor: COLORS.lightpurple,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: 10
-                        }}
-                    >
-                        <Image
-                            source={icons.phone}
-                            resizeMode="cover"
-                            style={{
-                                height: 25,
-                                width: 25,
-                                tintColor: COLORS.purple
-                            }}
-                        />
-                    </View>
-                    <Text style={{ marginLeft: SIZES.padding, ...FONTS.body4 }}>Phone Number</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginLeft: SIZES.padding * 2
-                    }}
-                    onPress={() => console.log("Barcode")}
-                >
-                    <View
-                        style={{
-                            width: 40,
-                            height: 40,
-                            backgroundColor: COLORS.lightGreen,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: 10
-                        }}
-                    >
-                        <Image
-                            source={icons.barcode}
-                            resizeMode="cover"
-                            style={{
-                                height: 25,
-                                width: 25,
-                                tintColor: COLORS.primary
-                            }}
-                        />
-                    </View>
-                    <Text style={{ marginLeft: SIZES.padding, ...FONTS.body4 }}>Barcode</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    )
-}
-  function renderHeader() {
+  
     return (
-        <View style={{ flexDirection: 'row', marginTop: SIZES.padding * 4, paddingHorizontal: SIZES.padding * 3 }}>
-            <TouchableOpacity
-                style={{
-                    width: 45,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}
-                onPress={() => navigation.navigate("Home")}
-            >
-                <Image
-                    source={icons.close}
-                    style={{
-                        height: 20,
-                        width: 20,
-                        tintColor: COLORS.white
-                    }}
-                />
-            </TouchableOpacity>
-
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={{ color: COLORS.white, ...FONTS.body3 }}>Scan for Payment</Text>
+      <QRCodeScanner
+        showMarker
+        ref={scanner}
+        // onRead={this.onSuccess.bind(this)}
+        onRead={onSuccess}
+        cameraStyle={{ height: SCREEN_HEIGHT }}
+        customMarker={
+          <View style={styles.rectangleContainer}>
+            <View style={styles.topOverlay}>
+              <Text style={{ fontSize: 30, color: "white" }}>
+                QR CODE SCANNER
+              </Text>
             </View>
 
-            <TouchableOpacity
-                style={{
-                    height: 45,
-                    width: 45,
-                    backgroundColor: COLORS.green,
-                    borderRadius: 10,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}
-                onPress={() => console.log("Info")}
-            >
-                <Image
-                    source={icons.info}
-                    style={{
-                        height: 25,
-                        width: 25,
-                        tintColor: COLORS.white
-                    }}
-                />
-            </TouchableOpacity>
-        </View>
-    )
-}
-    return(
-        <View
-            style={{
-                flex:1,
-               backgroundColor: COLORS.transparent
-            }}
-        >
-         <RNCamera
-          ref={ref => {
-            this.camera = ref
-        }}
-            style={{
-                flex:1
-            }}
-            captureAudio={false}
-            type={RNCamera.Constants.Type.back}
-            flashMode={RNCamera.Constants.FlashMode.off}
-            androidCameraPermissionOptions={{
-                title:"Permission to use camera",
-                message:"Camera is required for barcode scanning"
+            <View style={{ flexDirection: "row" }}>
+              <View style={styles.leftAndRightOverlay} />
 
-            }}
-            onBarCodeRead={onBarCodeRead}
-         >
-               {renderHeader()}
-               {renderScanFocus()}
-               {renderPaymentMethods()}
-         </RNCamera>
-           
-        </View>
-    )
+              <View style={styles.rectangle}>
+                  <Image
+                        source={icons.ios_scanner}
+                        //color ={iconScanColor}
+                        style={{
+                            width:SCREEN_WIDTH * 0.73,
+                            height:SCREEN_WIDTH * 0.73,
+                            tintColor:COLORS.blue
+                        }}
+                  />
+              {/*   <Icon
+                  name="ios-qr-code"
+                  size={SCREEN_WIDTH * 0.73}
+                  color={iconScanColor}
+                /> */}
+                <Animatable.View
+                  style={styles.scanBar}
+                  direction="alternate-reverse"
+                  iterationCount="infinite"
+                  duration={1700}
+                  easing="linear"
+                  animation={makeSlideOutTranslation(
+                    "translateY",
+                    SCREEN_WIDTH * -0.54
+                  )}
+                />
+              </View>
+
+              <View style={styles.leftAndRightOverlay} />
+            </View>
+
+            <View style={styles.bottomOverlay} />
+          </View>
+        }
+      />
+    );
+  
 }
-const styles = StyleSheet.create({
-    centered: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    }
-  });
+
+const overlayColor = "rgba(0,0,0,0.5)"; // this gives us a black color with a 50% transparency
+
+const rectDimensions = SCREEN_WIDTH * 0.65; // this is equivalent to 255 from a 393 device width
+const rectBorderWidth = SCREEN_WIDTH * 0.005; // this is equivalent to 2 from a 393 device width
+const rectBorderColor = "red";
+
+const scanBarWidth = SCREEN_WIDTH * 0.46; // this is equivalent to 180 from a 393 device width
+const scanBarHeight = SCREEN_WIDTH * 0.0025; //this is equivalent to 1 from a 393 device width
+const scanBarColor = "#22ff00";
+
+const iconScanColor = "blue";
+
+const styles = {
+  rectangleContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent"
+  },
+
+  rectangle: {
+    height: rectDimensions,
+    width: rectDimensions,
+    borderWidth: rectBorderWidth,
+    borderColor: rectBorderColor,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent"
+  },
+
+  topOverlay: {
+    flex: 1,
+    height: SCREEN_WIDTH,
+    width: SCREEN_WIDTH,
+    backgroundColor: overlayColor,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  bottomOverlay: {
+    flex: 1,
+    height: SCREEN_WIDTH,
+    width: SCREEN_WIDTH,
+    backgroundColor: overlayColor,
+    paddingBottom: SCREEN_WIDTH * 0.25
+  },
+
+  leftAndRightOverlay: {
+    height: SCREEN_WIDTH * 0.65,
+    width: SCREEN_WIDTH,
+    backgroundColor: overlayColor
+  },
+
+  scanBar: {
+    width: scanBarWidth,
+    height: scanBarHeight,
+    backgroundColor: scanBarColor
+  }
+};
+
 export default ScanScreen;
+

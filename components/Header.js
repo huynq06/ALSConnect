@@ -16,7 +16,9 @@ const Header = ({containerStyle,title,leftComponent,rightComponent})=>{
                 bottom:0,
                 right:0,
                zIndex:100,
-                borderBottomRightRadius:SIZES.radius*2,
+               borderBottomWidth:1,
+               borderBottomColor:COLORS.lightGray1,
+              //  borderBottomRightRadius:SIZES.radius*2,
               //  backgroundColor:COLORS.red,
                 ...containerStyle
             }}
@@ -32,8 +34,9 @@ const Header = ({containerStyle,title,leftComponent,rightComponent})=>{
             >
                 <Text style={{
                     ...FONTS.h3,
-                    fontFamily:'Poppins-BoldItalic',
-                    color:COLORS.white
+                    fontSize:18,
+                    fontFamily:'Roboto-Bold',
+                    color:COLORS.darkGray
                 }}>{title}</Text>
             </View>
             {/*  right */}

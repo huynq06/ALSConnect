@@ -1,5 +1,13 @@
-import React, {useEffect, useState,useCallback} from 'react';
-import {View, StyleSheet, ScrollView, Image,TouchableOpacity,ActivityIndicator,RefreshControl} from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+  RefreshControl,
+} from 'react-native';
 import Tabs from '../../../components/Tabs';
 import {
   COLORS,
@@ -9,16 +17,16 @@ import {
   icons,
   constants,
 } from '../../../constants';
-import { useSelector, useDispatch } from "react-redux";
+import {useSelector, useDispatch} from 'react-redux';
 import Header from '../../../components/Header';
 import CartQuantityButton from '../../../components/CartQuantityButton';
-import * as lagiAction from '../../../stores/actions/lagiDetail'
+import * as lagiAction from '../../../stores/actions/lagiDetail';
 import LineDivider from '../../../components/LineDivider';
 const ImportAwbDetailScreen = ({navigation, route}) => {
   let _scrollView;
-  const cartLagiQuantity = useSelector(state=>state.cartLagi.quantity)
+  const cartLagiQuantity = useSelector(state => state.cartLagi.quantity);
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
-/*   const [currentStep, setCurrentStep] = useState(-1);
+  /*   const [currentStep, setCurrentStep] = useState(-1);
   const [currentCustomStep, setCurrentCustomStep] = useState(-1); */
   const tabs = ['GENERAL', 'TRACKING', 'CUSTOM'];
   const {lagiId, mawb, hawb} = route.params;
@@ -30,33 +38,28 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
     setCurrentTabIndex(index);
     // props.onSelectDate(dates[index]);
   };
-  const lagiDetail = useSelector(state=>{
-    const awb =  state.lagiDetail.lagiDetail
+  const lagiDetail = useSelector(state => {
+    const awb = state.lagiDetail.lagiDetail;
     return awb;
-  })
-  const currentStep = useSelector(state=>
-    state.lagiDetail.currentStep
-  )
-  console.log('currentStep Awb DetailScreen:',currentStep) 
-  const currentCustomStep = useSelector(state=>
-    state.lagiDetail.currentCustomStep
-  )
-  const loadLagiDetails = useCallback(async (id) => {
-    setError(null);
-    setIsRefreshing(true);
-    try {
-      console.log('da chay vao call back')
-      await dispatch(lagiAction.getLagi(id));
- /*      setCurrentStep(lagiDetail?.trackStatus)
-      setCurrentCustomStep(lagiDetail?.customStatus)
-      console.log('ket thuc callback')
-      console.log('currentStep:',currentStep) */
-    } catch (err) {
-      setError(err.message);
-    }
-    setIsRefreshing(false);
-  }, [dispatch, setIsLoading, setError]);
-/*   useEffect(() => {
+  });
+  const currentStep = useSelector(state => state.lagiDetail.currentStep);
+  const currentCustomStep = useSelector(
+    state => state.lagiDetail.currentCustomStep,
+  );
+  const loadLagiDetails = useCallback(
+    async id => {
+      setError(null);
+      setIsRefreshing(true);
+      try {
+        await dispatch(lagiAction.getLagi(id));
+      } catch (err) {
+        setError(err.message);
+      }
+      setIsRefreshing(false);
+    },
+    [dispatch, setIsLoading, setError],
+  );
+  /*   useEffect(() => {
     const willFocusSub = navigation.addListener(
       'willFocus',
       loadLagiDetails
@@ -70,9 +73,8 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
     setIsLoading(true);
     loadLagiDetails(lagiId).then(() => {
       setIsLoading(false);
-      
     });
-  }, [dispatch,loadLagiDetails]);
+  }, [dispatch, loadLagiDetails]);
   function renderGennaralInformation() {
     return (
       <View
@@ -147,7 +149,7 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
               Tổng cân
             </Text>
             <Text body3 green>
-            {lagiDetail.weightReceived}
+              {lagiDetail.weightReceived}
             </Text>
           </View>
           <View
@@ -171,7 +173,7 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
               Địa chỉ
             </Text>
             <Text body3 black>
-            {lagiDetail.consignee}
+              {lagiDetail.consignee}
             </Text>
           </View>
         </View>
@@ -197,7 +199,7 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
           borderRadius: SIZES.radius,
           borderWidth: 2,
           borderColor: COLORS.lightGray2,
-          marginHorizontal:SIZES.padding,
+          marginHorizontal: SIZES.padding,
           backgroundColor: COLORS.white,
         }}>
         {/* Track Order */}
@@ -217,69 +219,73 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
         <LineDivider />
         {/* Status */}
         <View
+          style={{
+            marginTop: SIZES.padding,
+            paddingHorizontal: SIZES.padding,
+          }}>
+          {constants.track_order_status.map((item, index) => {
+            return (
+              <View key={`StatusList-${index}`}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginVertical: -5,
+                  }}>
+                  <Image
+                    source={icons.check_circle}
                     style={{
-                        marginTop:SIZES.padding,
-                        paddingHorizontal:SIZES.padding
+                      width: 40,
+                      height: 40,
+                      tintColor:
+                        index <= currentStep
+                          ? COLORS.primary
+                          : COLORS.lightGray1,
                     }}
-                >
-                    {constants.track_order_status.map((item,index)=>{
-                        return(
-                            <View
-                                key={`StatusList-${index}`}
-                            >
-                                <View
-                                    style={{
-                                        flexDirection:'row',
-                                        alignItems:'center',
-                                        marginVertical:-5
-                                    }}
-                                >
-                                    <Image source={icons.check_circle}
-                                        style={{
-                                            width:40,
-                                            height:40,
-                                            tintColor: index <= currentStep ? COLORS.primary : COLORS.lightGray1
-                                        }}
-                                    />
-                                    <View
-                                        style={{
-                                            marginLeft:SIZES.radius,
-                                        }}
-                                    >
-                                        <Text h3>{item.title}</Text>
-                                        <Text gray body4>{item.sub_title}</Text>
-                                    </View>
-                                </View>
-                                {index < constants.track_order_status.length-1 && <View>
-                                    {index < currentStep && <View
-                                        style={{
-                                            height:50,
-                                            width:3,
-                                            marginLeft:18,
-                                            backgroundColor:COLORS.primary,
-                                            zIndex:-1
-                                        }}
-                                    >
-                                        </View>}
-                                        {index >= currentStep &&
-                                        <Image
-                                            source={icons.dotted_line}
-                                            resizeMode="cover"
-                                            style={{
-                                                width:4,
-                                                height:50,
-                                                marginLeft:17
-                                            }}
-                                        />}
-                                    </View>}
-                            </View>
-                        )
-                    })}
+                  />
+                  <View
+                    style={{
+                      marginLeft: SIZES.radius,
+                    }}>
+                    <Text h3>{item.title}</Text>
+                    <Text gray body4>
+                      {item.sub_title}
+                    </Text>
+                  </View>
                 </View>
+                {index < constants.track_order_status.length - 1 && (
+                  <View>
+                    {index < currentStep && (
+                      <View
+                        style={{
+                          height: 50,
+                          width: 3,
+                          marginLeft: 18,
+                          backgroundColor: COLORS.primary,
+                          zIndex: -1,
+                        }}></View>
+                    )}
+                    {index >= currentStep && (
+                      <Image
+                        source={icons.dotted_line}
+                        resizeMode="cover"
+                        style={{
+                          width: 4,
+                          height: 50,
+                          marginLeft: 17,
+                        }}
+                      />
+                    )}
+                  </View>
+                )}
+              </View>
+            );
+          })}
+        </View>
       </View>
     );
   }
-  function renderTrackCustom(){
+  function renderTrackCustom() {
     return (
       <View
         style={{
@@ -288,7 +294,7 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
           borderRadius: SIZES.radius,
           borderWidth: 2,
           borderColor: COLORS.lightGray2,
-          marginHorizontal:SIZES.padding,
+          marginHorizontal: SIZES.padding,
           backgroundColor: COLORS.white,
         }}>
         {/* Track Order */}
@@ -308,130 +314,141 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
         <LineDivider />
         {/* Status */}
         <View
+          style={{
+            marginTop: SIZES.padding,
+            paddingHorizontal: SIZES.padding,
+          }}>
+          {constants.track_custom_status.map((item, index) => {
+            return (
+              <View key={`StatusList-${index}`}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginVertical: -5,
+                  }}>
+                  <Image
+                    source={icons.check_circle}
                     style={{
-                        marginTop:SIZES.padding,
-                        paddingHorizontal:SIZES.padding
+                      width: 40,
+                      height: 40,
+                      tintColor:
+                        index <= currentCustomStep
+                          ? COLORS.primary
+                          : COLORS.lightGray1,
                     }}
-                >
-                    {constants.track_custom_status.map((item,index)=>{
-                        return(
-                            <View
-                                key={`StatusList-${index}`}
-                            >
-                                <View
-                                    style={{
-                                        flexDirection:'row',
-                                        alignItems:'center',
-                                        marginVertical:-5
-                                    }}
-                                >
-                                    <Image source={icons.check_circle}
-                                        style={{
-                                            width:40,
-                                            height:40,
-                                            tintColor: index <= currentCustomStep ? COLORS.primary : COLORS.lightGray1
-                                        }}
-                                    />
-                                    <View
-                                        style={{
-                                            marginLeft:SIZES.radius,
-                                        }}
-                                    >
-                                        <Text h3>{item.title}</Text>
-                                        <Text gray body4>{item.sub_title}</Text>
-                                    </View>
-                                </View>
-                                {index < constants.track_custom_status.length-1 && <View>
-                                    {index < currentCustomStep && <View
-                                        style={{
-                                            height:50,
-                                            width:3,
-                                            marginLeft:18,
-                                            backgroundColor:COLORS.primary,
-                                            zIndex:-1
-                                        }}
-                                    >
-                                        </View>}
-                                        {index >= currentCustomStep &&
-                                        <Image
-                                            source={icons.dotted_line}
-                                            resizeMode="cover"
-                                            style={{
-                                                width:4,
-                                                height:50,
-                                                marginLeft:17
-                                            }}
-                                        />}
-                                    </View>}
-                            </View>
-                        )
-                    })}
+                  />
+                  <View
+                    style={{
+                      marginLeft: SIZES.radius,
+                    }}>
+                    <Text h3>{item.title}</Text>
+                    <Text gray body4>
+                      {item.sub_title}
+                    </Text>
+                  </View>
                 </View>
+                {index < constants.track_custom_status.length - 1 && (
+                  <View>
+                    {index < currentCustomStep && (
+                      <View
+                        style={{
+                          height: 50,
+                          width: 3,
+                          marginLeft: 18,
+                          backgroundColor: COLORS.primary,
+                          zIndex: -1,
+                        }}></View>
+                    )}
+                    {index >= currentCustomStep && (
+                      <Image
+                        source={icons.dotted_line}
+                        resizeMode="cover"
+                        style={{
+                          width: 4,
+                          height: 50,
+                          marginLeft: 17,
+                        }}
+                      />
+                    )}
+                  </View>
+                )}
+              </View>
+            );
+          })}
+        </View>
       </View>
     );
   }
-  function renderHeader(){
-    return(
-        <Header
-            containerStyle={{
-                height:80,
-                paddingHorizontal: SIZES.padding,
-              //  marginTop:SIZES.padding,
-                alignItems:'center',
-                backgroundColor:COLORS.primaryALS,
-             //   borderBottomRightRadius:SIZES.radius*2
+  function renderHeader() {
+    return (
+      <Header
+        containerStyle={{
+          height: 80,
+          paddingHorizontal: SIZES.padding,
+          //  marginTop:SIZES.padding,
+          alignItems: 'center',
+          backgroundColor: COLORS.primaryALS,
+          //   borderBottomRightRadius:SIZES.radius*2
+        }}
+        title="AWB Import DETAILS"
+        leftComponent={
+          <TouchableOpacity
+            style={{
+              width: 35,
+              height: 35,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: SIZES.radius,
+              borderWidth: 1,
+              borderColor: COLORS.gray2,
             }}
-            title="AWB Import DETAILS"
-            leftComponent={
-                <TouchableOpacity
-                    style={{
-                        width:35,
-                        height:35,
-                        alignItems:'center',
-                        justifyContent:'center',
-                        borderRadius:SIZES.radius,
-                        borderWidth:1,
-                        borderColor:COLORS.gray2,
-                        
-                    }}
-                    onPress={()=>navigation.goBack()}
-                >
-                   <Image 
-                   source={icons.back}
-                   style={{
-                       width:25,
-                       height:25
-                   }}
-                   resizeMode="contain" />
-                </TouchableOpacity>
-            }
-             rightComponent={<CartQuantityButton quantity={cartLagiQuantity} onPress={()=>navigation.navigate("CartLagi")} />}
-        />
-        
-    )
-}
-if (isLoading) {
-  return (
-    <View style={styles.centered}>
-      <ActivityIndicator size="large" color={COLORS.primary} />
-    </View>
-  );
-}
+            onPress={() => navigation.goBack()}>
+            <Image
+              source={icons.back}
+              style={{
+                width: 25,
+                height: 25,
+              }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <CartQuantityButton
+            quantity={cartLagiQuantity}
+            onPress={() => navigation.navigate('CartLagi')}
+          />
+        }
+      />
+    );
+  }
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+      </View>
+    );
+  }
 
   return (
     <ScrollView
-    refreshControl= {<RefreshControl refreshing={isRefreshing}  onRefresh={()=>loadLagiDetails(lagiId)} />}
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefreshing}
+          onRefresh={() => loadLagiDetails(lagiId)}
+        />
+      }
       style={{
         backgroundColor: COLORS.white,
         flex: 1,
         // flex:1
       }}>
-         {renderHeader()}
+      {renderHeader()}
       <View
         style={{
-          marginTop:80
-        }}
-      ></View>
+          marginTop: 80,
+        }}></View>
       <Tabs
         tabs={tabs}
         currentTabIndex={currentTabIndex}
@@ -439,11 +456,11 @@ if (isLoading) {
       />
       {currentTabIndex == 0 && (
         <View
-        /*   ref={scrollView => {
+          /*   ref={scrollView => {
             _scrollView = scrollView;
           }} */
-     //     refreshControl= {<RefreshControl refreshing={isRefreshing}  onRefresh={()=>loadLagiDetails(lagiId)} />}
-    
+          //     refreshControl= {<RefreshControl refreshing={isRefreshing}  onRefresh={()=>loadLagiDetails(lagiId)} />}
+
           // horizontal={true}                         // Enable horizontal scrolling
           showsHorizontalScrollIndicator={false} // Hide horizontal scroll indicators
           automaticallyAdjustContentInsets={false}
@@ -459,10 +476,10 @@ if (isLoading) {
 
       {currentTabIndex == 1 && (
         <View
-       /*    ref={scrollView => {
+          /*    ref={scrollView => {
             _scrollView = scrollView;
           }} */
-      //    refreshControl= {<RefreshControl refreshing={isRefreshing}  onRefresh={()=>loadLagiDetails(lagiId)} />}
+          //    refreshControl= {<RefreshControl refreshing={isRefreshing}  onRefresh={()=>loadLagiDetails(lagiId)} />}
           // horizontal={true}                         // Enable horizontal scrolling
           showsHorizontalScrollIndicator={false} // Hide horizontal scroll indicators
           automaticallyAdjustContentInsets={false}
@@ -475,12 +492,12 @@ if (isLoading) {
           {renderTrackOrder()}
         </View>
       )}
-       {currentTabIndex == 2 && (
+      {currentTabIndex == 2 && (
         <View
           /* ref={scrollView => {
             _scrollView = scrollView;
           }} */
-    //      refreshControl= {<RefreshControl refreshing={isRefreshing}  onRefresh={()=>loadLagiDetails(lagiId)} />}
+          //      refreshControl= {<RefreshControl refreshing={isRefreshing}  onRefresh={()=>loadLagiDetails(lagiId)} />}
           // horizontal={true}                         // Enable horizontal scrolling
           showsHorizontalScrollIndicator={false} // Hide horizontal scroll indicators
           automaticallyAdjustContentInsets={false}
@@ -493,7 +510,6 @@ if (isLoading) {
           {renderTrackCustom()}
         </View>
       )}
-      
     </ScrollView>
   );
 };
@@ -503,6 +519,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     textAlign: 'left',
   },
-  centered: { flex: 1, justifyContent: 'center', alignItems: 'center' }
+  centered: {flex: 1, justifyContent: 'center', alignItems: 'center'},
 });
 export default ImportAwbDetailScreen;

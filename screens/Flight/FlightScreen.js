@@ -65,7 +65,7 @@ const FlightScreen = ({navigation, route}) => {
   setError(null);
   setIsRefreshing(true);
   try {
-      await dispatch(flightsActions.fetchFavouriteFlights());
+      await dispatch(flightsActions.fetchFavouriteFlights('IMPORT'));
   } catch (err) {
     setError(err.message);
   }
@@ -88,7 +88,7 @@ const FlightScreen = ({navigation, route}) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', ()=>{
       loadFlights('','',dateWithSec(dateForFiltering))
-    //  loadFavouriteFlights()
+     loadFavouriteFlights()
     });
 
     return () => {
@@ -101,9 +101,9 @@ const FlightScreen = ({navigation, route}) => {
     const dateCheck = dateWithSec(dateForFiltering);
     loadFlights('','',dateCheck).then(() => {
       setIsLoading(false);
-    /*   loadFavouriteFlights().then(() => {
+    loadFavouriteFlights().then(() => {
         setIsLoading(false);
-      }); */
+      }); 
     });
    
   }, [dispatch, loadFlights,dateForFiltering]);
@@ -132,7 +132,7 @@ const FlightScreen = ({navigation, route}) => {
       setSearchText(text);
   }
   const toggleFavoriteHandler = (id) =>{
-    dispatch(flightsActions.addFavouriteFlights(id,tokenId))
+    dispatch(flightsActions.addFavouriteFlights(id,tokenId,'IMPORT'))
     if(favouriteFlights.includes(id)){
       toast.show("Hủy nhận thống báo thành công",{
         type:'error',
@@ -171,7 +171,7 @@ const FlightScreen = ({navigation, route}) => {
           paddingHorizontal: SIZES.padding,
           //  marginTop:SIZES.padding,
           alignItems: 'center',
-          backgroundColor: COLORS.primaryALS,
+          backgroundColor: COLORS.white,
           //   borderBottomRightRadius:SIZES.radius*2
         }}
         title="Flight"

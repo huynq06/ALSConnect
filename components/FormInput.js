@@ -16,6 +16,7 @@ const FormInput = ({
   inputStyle,
   autoCapitalize,
   containerStyle,
+  inputContainerStyle
 }) => {
   return (
     <View
@@ -46,7 +47,8 @@ const FormInput = ({
           marginTop: SIZES.base,
           paddingHorizontal: SIZES.padding,
           borderRadius: SIZES.radius,
-          backgroundColor:COLORS.lightGray2
+          backgroundColor:COLORS.lightGray2,
+          ...inputContainerStyle
         }}
       >
         {prepandComponent}

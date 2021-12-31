@@ -13,6 +13,7 @@ import Notification from "../screens/Notification/Notification";
 import ScanScreen from "../screens/Scan/ScanScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS, FONTS, icons,images } from "../constants"
+import Setting from "../screens/Setting/SettingScreen";
 import OrderLagiScreen from "../screens/Import/OrderLagi/OrderLagiScreen";
 import Svg, {
     Path
@@ -164,8 +165,8 @@ const MainNavigator = ()=>{
                 }}
             />
              <Tab.Screen 
-                name='Search' 
-                component= {About}
+                name='Notify' 
+                component= {Notification}
                 options={{
                     tabBarIcon:({focused})=>(
                         <View
@@ -175,7 +176,7 @@ const MainNavigator = ()=>{
                                 
                             }}
                         >
-                            <Image source={icons.search} resizeMode="contain" style={{
+                            <Image source={icons.notification} resizeMode="contain" style={{
                                 width:30,
                                 height:40,
                               
@@ -183,7 +184,7 @@ const MainNavigator = ()=>{
                             }} />
                              <Text style={{
                                 color:focused? COLORS.secondaryALS:COLORS.darkGray
-                            }}>Search</Text>
+                            }}>Notify</Text>
                         </View>
                     ),
                     // tabBarButton:(props)=>(
@@ -244,7 +245,7 @@ const MainNavigator = ()=>{
             />
              <Tab.Screen 
                 name='Setting' 
-                component= {About}
+                component= {Setting}
                 options={{
                     tabBarIcon:({focused})=>(
                         <View

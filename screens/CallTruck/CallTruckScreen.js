@@ -114,7 +114,7 @@ const CallTruckScreen = ({navigation,route})=>{
         if (loading) return;
         setLoading(true);
         setIsRefreshing(true);
-        fetch("http://10.10.1.25:8011/api/CallTrucks",
+        fetch("http://14.160.23.141:8011/api/CallTrucks",
           {
             method: "GET",
             headers: {Accept: "application/json", "Content-Type": "application/json"},
@@ -171,11 +171,11 @@ const CallTruckScreen = ({navigation,route})=>{
       return (
         <Header
           containerStyle={{
-            height: 80,
+            height: 60,
             paddingHorizontal: SIZES.padding,
             //  marginTop:SIZES.padding,
             alignItems: 'center',
-            backgroundColor: COLORS.primaryALS,
+            backgroundColor: COLORS.white,
             //   borderBottomRightRadius:SIZES.radius*2
           }}
           title="Call Trucks"
@@ -301,7 +301,7 @@ const CallTruckScreen = ({navigation,route})=>{
             {renderHeader()}
             <View
         style={{
-          height: 80,
+          height: 60,
           backgroundColor: COLORS.white,
         }}></View>
             {renderTabBar()}

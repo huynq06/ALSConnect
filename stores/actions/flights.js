@@ -36,12 +36,12 @@ export const fetchFlights = (code,number,date) =>{
         catch(err){}
     }
 }
-export const fetchFavouriteFlights = () =>{
+export const fetchFavouriteFlights = (type) =>{
     return async (dispatch, getState) => {
         const userId = getState().auth.userId;
         try {
           const response = await fetch(
-            `http://tracuu.alsc.com.vn/api/FlightFavouriteApi/${userId}`
+            'http://tracuu.alsc.com.vn/api/FlightFavouriteApi?userId='+userId + '&type='+type
           );
     
           if (!response.ok) {
@@ -61,7 +61,7 @@ export const fetchFavouriteFlights = () =>{
         }
       };
 }
-export const addFavouriteFlights = (id,tokenNotification) =>{
+export const addFavouriteFlights = (id,tokenNotification,type) =>{
     return async (dispatch, getState) => {
         const token = getState().auth.token;
         const userId = getState().auth.userId;
@@ -80,7 +80,8 @@ export const addFavouriteFlights = (id,tokenNotification) =>{
             body:  JSON.stringify({
               FlightID :id,
               UserID: userId,
-              TokenID: tokenNotification
+              TokenID: tokenNotification,
+              Type: type
             })
           }
         );

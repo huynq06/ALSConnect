@@ -15,6 +15,7 @@ import lagiDetailReducer from './stores/reducers/lagiDetail'
 import cartLagiReducer from './stores/reducers/cartLagi'
 import orderLagiReducer from './stores/reducers/orderLagi'
 import flightReducer from './stores/reducers/flights'
+import flightExpReducer from './stores/reducers/flightsExp'
 import {ToastProvider} from 'react-native-toast-notifications'
 import codePush from "react-native-code-push";
 import createSagaMiddleware from 'redux-saga';
@@ -23,6 +24,9 @@ import sagaRoot from './stores/sagas'
 import counterReducer from './stores/reducers/counter'
 import apiTesterReducer from './stores/reducers/apiTester'
 import loadingReducer from './stores/reducers/LoadingReducer'
+import labsReducer from './stores/reducers/labs'
+import expTrackStatusReducer from './stores/reducers/expTrackStatus'
+import expTrackCustomStatusReducer from "./stores/reducers/expTrackCustomStatus";
 const rootReducer = combineReducers({
   auth: authReducer,
   lagis: lagiReducer,
@@ -31,9 +35,13 @@ const rootReducer = combineReducers({
   cartLagi: cartLagiReducer,
   oderLagi : orderLagiReducer,
   flights : flightReducer,
+  flightsExp : flightReducer,
   counter: counterReducer,
   apiTester: apiTesterReducer,
-  loading: loadingReducer
+  loading: loadingReducer,
+  labs: labsReducer,
+  expTrackStatus: expTrackStatusReducer,
+  expTrackCustomStatus: expTrackCustomStatusReducer
 });
 let middlewares = [];
 const STYLES = ['default', 'dark-content', 'light-content'];
@@ -106,7 +114,7 @@ let App = () => {
     }
   },[])
   const [hidden, setHidden] = useState(false);
-  const [statusBarStyle, setStatusBarStyle] = useState(STYLES[0]);
+  const [statusBarStyle, setStatusBarStyle] = useState(STYLES[1]);
   const [statusBarTransition, setStatusBarTransition] = useState(TRANSITIONS[0]);
   const changeStatusBarVisibility = () => setHidden(!hidden);
 
@@ -133,7 +141,8 @@ let App = () => {
       <ToastProvider>
      <StatusBar
         animated={true}
-        backgroundColor= {COLORS.transparentPrimary}
+        backgroundColor= {COLORS.white}
+
         barStyle={statusBarStyle}
         showHideTransition={statusBarTransition}
         hidden={hidden} />

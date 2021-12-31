@@ -2,9 +2,10 @@
   package="com.alsconnect">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
 <!-- Required -->
 <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.VIBRATE"/>
 <!-- Include this only if you are planning to use the camera roll -->
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

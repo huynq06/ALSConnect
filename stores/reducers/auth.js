@@ -2,14 +2,17 @@ import {
   AUTHENTICATE,
   SET_DID_TRY_AL,
   IS_DISSMISS,
-  LOGOUT
+  LOGOUT,
+  SET_AVATAR
 } from "../actions/auth";
 
 const initialState = {
   userId: null,
+  userName:'',
   token: null,
   didTryAutoLogin: false,
   dissMiss: false,
+  avatarUrl:'',
 };
 
 export default (state = initialState, action) => {
@@ -18,9 +21,16 @@ export default (state = initialState, action) => {
       return {
         userId: action.userId,
         token: action.token,
+        userName: action.userName,
         didTryAutoLogin: true,
-        dissMiss: true
+        dissMiss: true,
+        avatarUrl: action.avatarUrl
       };
+     case SET_AVATAR:
+       return{
+         ...state,
+         avatarUrl: action.avatarUrl
+       }
     case SET_DID_TRY_AL:
       return {
         ...state,

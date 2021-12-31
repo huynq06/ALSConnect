@@ -1,7 +1,6 @@
 import * as types from './actionTypes';
 
 export function start(payload){
-    console.log('da chay vao start loading ',payload)
     return{
         type: types.START_LOADING,
         payload: payload

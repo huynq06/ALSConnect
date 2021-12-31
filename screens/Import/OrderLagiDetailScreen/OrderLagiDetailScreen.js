@@ -5,15 +5,9 @@ import {
   COLORS,
   SIZES,
   Text,
-  images,
   icons,
-  constants,
 } from '../../../constants';
-import { useSelector, useDispatch } from "react-redux";
 import Header from '../../../components/Header';
-import CartQuantityButton from '../../../components/CartQuantityButton';
-import LineDivider from '../../../components/LineDivider';
-import TextButton from '../../../components/TextButton';
 import OrderDetailHistory from '../../../components/OrderDetailHistory';
 import QRCode from 'react-native-qrcode-svg';
 const OrderLagiDetailSreen = ({navigation,route}) =>{
@@ -75,11 +69,11 @@ const OrderLagiDetailSreen = ({navigation,route}) =>{
     return(
         <Header
             containerStyle={{
-                height:80,
+                height:60,
                 paddingHorizontal: SIZES.padding,
               //  marginTop:SIZES.padding,
                 alignItems:'center',
-                backgroundColor:COLORS.primaryALS,
+                backgroundColor:COLORS.white,
              //   borderBottomRightRadius:SIZES.radius*2
             }}
             title="Order History Detail"
@@ -130,7 +124,7 @@ const OrderLagiDetailSreen = ({navigation,route}) =>{
               {renderHeader()}
               <View
         style={{
-          marginTop:80
+          marginTop:60
         }}
       ></View>
                 <ScrollView>

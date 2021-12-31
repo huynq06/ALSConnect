@@ -11,10 +11,58 @@ import * as authActions from  '../stores/actions/auth';
 import HomeNavigator from './HomeNavigator/HomeNavigator';
 import { useDispatch } from 'react-redux';
 import Loading from '../components/Loading/Loading';
+import {requestMultiple, PERMISSIONS} from 'react-native-permissions';
+import { useToast } from "react-native-toast-notifications";
 const AppNavigator = ({token}) =>{
     const dispatch = useDispatch();
     const [isAppFirstLaunched,setIsAppFirstLaunched] = useState(null);
     const dismiss = useSelector(state => state.auth.dissMiss);
+    const Toast = useToast();
+    const requestCameraPermission = async () => {
+        if (Platform.OS === 'ios') {
+          requestMultiple([
+            PERMISSIONS.IOS.CAMERA, PERMISSIONS.IOS.MEDIA_LIBRARY, PERMISSIONS.IOS.PHOTO_LIBRARY
+            ]).then((statuses) => {
+            console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
+            console.log('MEDIA_LIBRARY', statuses[PERMISSIONS.IOS.MEDIA_LIBRARY]);
+            console.log('MEDIA_LIBRARY', statuses[PERMISSIONS.IOS.PHOTO_LIBRARY]);
+          });
+          return;
+        }
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+              title: "App Camera Permission",
+              message:
+                "This App needs access to your camera so you can take awesome pictures.",
+              buttonNeutral: "Later",
+              buttonNegative: "Cancel",
+              buttonPositive: "OK"
+            }
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log('PermissionsAndroid.RESULTS.GRANTED')
+          } else {
+            Toast.show({
+              text: 'Camera permissions not granted',
+              buttonText: 'x',
+              duration: 10000,
+              type: 'danger',
+              textStyle: {textAlign: 'center'}, swipeDisabled: false
+            });
+          }
+        } catch (err) {
+          Toast.show({
+            text: err,
+            buttonText: 'x',
+            duration: 10000,
+            type: 'danger',
+            textStyle: {textAlign: 'center'}, swipeDisabled: false
+          });
+        }
+      };
+      
    // let isAppFirstLaunched = useSelector(state =>state.auth.isAppFirstLauched)
     useEffect(()=>{
         const tryGetLogin = async () =>{

@@ -236,38 +236,14 @@ const onSelectOrderHandler = item =>{
     return(
         <Header
             containerStyle={{
-                height:80,
+                height:60,
                 paddingHorizontal: SIZES.padding,
               //  marginTop:SIZES.padding,
                 alignItems:'center',
-                backgroundColor:COLORS.primaryALS,
+                backgroundColor:COLORS.white,
              //   borderBottomRightRadius:SIZES.radius*2
             }}
             title="Order History"
-            /* leftComponent={
-                <TouchableOpacity
-                    style={{
-                        width:35,
-                        height:35,
-                        alignItems:'center',
-                        justifyContent:'center',
-                        borderRadius:SIZES.radius,
-                        borderWidth:1,
-                        borderColor:COLORS.gray2,
-                        
-                    }}
-                    onPress={()=>navigation.goBack()}
-                >
-                   <Image 
-                   source={icons.back}
-                   style={{
-                       width:25,
-                       height:25
-                   }}
-                   resizeMode="contain" />
-                </TouchableOpacity>
-            } */
-            //  rightComponent={<CartQuantityButton quantity={cartLagiQuantity} onPress={()=>navigation.navigate("CartLagi")} />}
         />
         
     )
@@ -297,7 +273,7 @@ const onSelectOrderHandler = item =>{
       {renderHeader()}
       <View
         style={{
-          marginTop:80
+          marginTop:60
         }}
       ></View>
       {/* DateFilter */}

@@ -183,6 +183,60 @@ const track_custom_status = [
     //     sub_title: "Help us improve our service"
     // }
 ]
+const track_awb_status = [
+    {
+        id: 1,
+        title: "VCT",
+        sub_title: "Your awb has done VCT"
+    },
+    {
+        id: 2,
+        title: "DIM",
+        sub_title: "Your awb has been DIM"
+    },
+    {
+        id: 3,
+        title: "Done SCALE",
+        sub_title: "Your awb has been done SCALE"
+    },
+    {
+        id: 4,
+        title: "DEPTARTED",
+        sub_title: "OK!"
+    },
+    // {
+    //     id: 5,
+    //     title: "Rate Us",
+    //     sub_title: "Help us improve our service"
+    // }
+]
+const track_custom_export_status = [
+    {
+        id: 1,
+        title: "Dự kiến xếp dỡ",
+        sub_title: ""
+    },
+    {
+        id: 2,
+        title: "Get In",
+        sub_title: ""
+    },
+    {
+        id: 3,
+        title: "KVGS",
+        sub_title: ""
+    },
+    {
+        id: 4,
+        title: "Get out",
+        sub_title: "OK!"
+    },
+    // {
+    //     id: 5,
+    //     title: "Rate Us",
+    //     sub_title: "Help us improve our service"
+    // }
+]
 const locations = [
     {
         id: 1,
@@ -202,5 +256,7 @@ export default {
     tags,
     track_order_status,
     track_custom_status,
+    track_awb_status,
+    track_custom_export_status,
     locations
 }

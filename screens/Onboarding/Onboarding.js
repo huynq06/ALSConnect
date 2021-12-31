@@ -14,13 +14,6 @@ const OnBoarding = ({navigation}) => {
     const onViewChangeRef = useRef(({ viewableItems, changed }) => {
       setCurrentIndex(viewableItems[0].index);
     });
-    //  useEffect(()=>{
-    //   AsyncStorage.setItem('isAppFirstLaunched','false')
-    //  },[])
-    // const onViewableItemsChanged = ({viewableItems, changed}) => {
-    //     console.log("Visible items are", viewableItems);
-    //     console.log("Changed in this iteration", changed);
-    //   };
     function renderHeaderLogo() {
       return (
         <View

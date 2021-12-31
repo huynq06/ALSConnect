@@ -1,14 +1,26 @@
+const help = require("../assets/icons/help.png")
+const back = require("../assets/icons/back.png");
+const bell = require("../assets/icons/bell.png");
+const bill = require("../assets/icons/bill.png");
 const coupon = require("../assets/icons/coupon.png")
 const cross = require("../assets/icons/cross.png")
 const cart = require("../assets/icons/cart.png")
+const call = require("../assets/icons/call.png")
+const close = require("../assets/icons/close.png");
+const camera = require("../assets/icons/camera.png")
+const defaultUser = require("../assets/icons/defaultUser.png")
 const menu = require("../assets/icons/menu.png")
 const search = require("../assets/icons/search.png")
 const filter = require("../assets/icons/filter.png")
+const flightDepart = require("../assets/icons/flightDepart.png")
+const flightLanded = require("../assets/icons/flightLanded.png")
 const down_arrow = require("../assets/icons/down_arrow.png")
 const eye = require("../assets/icons/eye.png")
 const eye_close = require("../assets/icons/eye_close.png")
+const email = require("../assets/icons/email.png")
 const favourite = require("../assets/icons/favourite.png")
 const fb = require("../assets/icons/fb.png")
+const ios_scanner = require("../assets/icons/ios-qr-scanner-3.png")
 const google = require("../assets/icons/google.png")
 const burger = require("../assets/icons/burger.png")
 const cherry = require("../assets/icons/cherry.png")
@@ -27,11 +39,9 @@ const setting = require("../assets/icons/setting.png")
 const star = require("../assets/icons/star.png")
 const wallet = require("../assets/icons/wallet.png")
 const history = require("../assets/icons/history.png")
-const help = require("../assets/icons/help.png")
-const back = require("../assets/icons/back.png");
-const bell = require("../assets/icons/bell.png");
-const bill = require("../assets/icons/bill.png");
-const close = require("../assets/icons/close.png");
+
+
+
 const disable_eye = require("../assets/icons/disable_eye.png");
 const down = require("../assets/icons/down.png");
 //const eye = require("../assets/icons/eye.png")
@@ -41,6 +51,7 @@ const info = require("../assets/icons/info.png");
 const internet = require("../assets/icons/internet.png");
 const more = require("../assets/icons/more.png");
 const phone = require("../assets/icons/phone.png");
+const password = require("../assets/icons/password.png")
 const reload = require("../assets/icons/reload.png");
 const scan = require("../assets/icons/scan.png");
 const send = require("../assets/icons/send.png");
@@ -70,6 +81,9 @@ export default {
     coupon,
     cross,
     cart,
+    camera,
+    defaultUser,
+    call,
     menu,
     search,
     filter,
@@ -77,11 +91,15 @@ export default {
     truck,
     eye,
     eye_close,
+    email,
     favourite,
+    flightDepart,
+    flightLanded,
     check_circle,
     lighting,
     fb,
     google,
+    ios_scanner,
     burger,
     cherry,
     right_arrow,
@@ -97,6 +115,7 @@ export default {
     history,
     notification,
     profile,
+    password,
     setting,
     star,
     wallet,

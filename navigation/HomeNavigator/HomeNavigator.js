@@ -3,11 +3,6 @@ import {View,Text,StyleSheet,TouchableOpacity} from 'react-native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import Home from "../../screens/Home/Home";
 import ImpAwbScreen,{screenOptions as ImpAwbScreenScreenOption} from "../../screens/Import/ImpAwbScreen";
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import CustomHeaderButton from "../../components/HeaderButton";
-import Notification from "../../screens/Notification/Notification";
 import MainNavigator from "../MainNavigator";
 import ImportAwbDetailScreen from "../../screens/Import/ImportAwbDetail/ImportAwbDetailScreen";
 import CartLagiScreen from "../../screens/Import/CartLagi/CartLagiScreen";
@@ -17,6 +12,15 @@ import OrderLagiDetailSreen from "../../screens/Import/OrderLagiDetailScreen/Ord
 import OrderSuccess from "../../screens/Import/CartLagi/OrderSuccess";
 import CallTruckScreen from "../../screens/CallTruck/CallTruckScreen";
 import FlightScreen from "../../screens/Flight/FlightScreen";
+import Setting from "../../screens/Setting/SettingScreen";
+import ChangePasswordScreen from '../../screens/ChangePassword/ChangePasswordScreen'
+import ExpAwbScreen from "../../screens/Export/ExpAwbScreen";
+import AwbTrackingScreen from "../../screens/Export/AwbTracking/AwbTrackingScreen";
+import AwbCustomTrackingScreen from "../../screens/Export/AwbCustomTracking/AwbCustomTrackingScreen";
+import FlightExpScreen from "../../screens/FlightExp/FlightExpScreen";
+import ScanScreen from "../../screens/Scan/ScanScreen";
+import ScanDetailScreen from "../../screens/Scan/ScanDetail/ScanDetailScreen";
+import ImagePickerScreen from "../../screens/Setting/ImagePicker/ImagePickerScreen";
 const Stack = createNativeStackNavigator();
 const defaultNavOptions = {
     headerStyle: {
@@ -56,7 +60,16 @@ const HomeNavigator = ({navigation,token})=>{
              <Stack.Screen name="OrderSuccess" component={OrderSuccess} />
              <Stack.Screen name="CallTruck" component={CallTruckScreen} />
              <Stack.Screen name="Flight" component={FlightScreen} initialParams={{tokenId: token}} />
-          
+             <Stack.Screen name="FlightExp" component={FlightExpScreen} initialParams={{tokenId: token}} />
+             <Stack.Screen name="Setting" component={Setting} initialParams={{tokenId: token}} />
+             <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} /> 
+             <Stack.Screen name="ExpAwb" component={ExpAwbScreen} initialParams={{tokenId: token}} />
+             <Stack.Screen name="AwbTracking" component={AwbTrackingScreen} initialParams={{tokenId: token}} />
+             <Stack.Screen name="AwbCustomTracking" component={AwbCustomTrackingScreen} initialParams={{tokenId: token}} />
+             <Stack.Screen name="Scan" component={ScanScreen} />
+             <Stack.Screen name="ScanDetail" component={ScanDetailScreen} />
+             <Stack.Screen name="ImagePicker" component={ImagePickerScreen} />
+             
         </Stack.Navigator>
     )
 }

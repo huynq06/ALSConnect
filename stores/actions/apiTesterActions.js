@@ -1,7 +1,6 @@
 import * as types from './actionTypes';
 
 export function apiRequest(payload){
-    console.log('payload',payload)
     return{
         type: types.API_REQUEST,
         payload: payload

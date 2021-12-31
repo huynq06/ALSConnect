@@ -52,7 +52,7 @@ const SignupSuccess = ({ navigation }) => {
                     height:55,
                     marginBottom: SIZES.padding,
                     borderRadius: SIZES.radius,
-                    backgroundColor:COLORS.primary
+                    backgroundColor:COLORS.primaryALS
                 }}
                 onPress={()=>navigation.navigate('Login')}
             />

@@ -12,7 +12,6 @@ import LagiItem from "../../components/LagiItem";
 import { VISITOR_KEYS } from "@babel/types";
 import * as cartLagiAction from '../../stores/actions/cartLagi'
 import CartQuantityButton from "../../components/CartQuantityButton";
-import { debounce } from "../../utils/Debounce";
 const ImpAwbScreen = ({navigation,route}) =>{
     const cartLagiQuantity = useSelector(state=>state.cartLagi.quantity)
     const cartItemsKey = useSelector(state => {
@@ -48,24 +47,8 @@ const ImpAwbScreen = ({navigation,route}) =>{
             loadLagis(text).then(() => {
               setLoading(false);
             });
-           // debounce(loadLagis(text), debounceTime)();
         }
     }
-/*     useEffect(() => {
-        if (searchText === 11) {
-            setLoading(true);
-            loadLagis(searchText).then(() => {
-              setLoading(false);
-            });
-        }
-      }, [loadLagis]); */
-  /*   useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', loadLagis);
-    
-        return () => {
-          unsubscribe();
-        };
-      }, [loadLagis]); */
     const loadLagis = useCallback(
         async (text) => {
           setError(null);
@@ -79,12 +62,10 @@ const ImpAwbScreen = ({navigation,route}) =>{
         return(
             <Header
                 containerStyle={{
-                    height:80,
+                    height:60,
                     paddingHorizontal: SIZES.padding,
-                  //  marginTop:SIZES.padding,
                     alignItems:'center',
-                    backgroundColor:COLORS.primaryALS,
-                 //   borderBottomRightRadius:SIZES.radius*2
+                    backgroundColor:COLORS.white,
                 }}
                 title="AWB Import"
                 leftComponent={
@@ -220,7 +201,7 @@ const ImpAwbScreen = ({navigation,route}) =>{
     const toggleFavoriteHandler = async (id)=>{
         await dispatch(lagiAction.toggleFavorite(id))
       }
-      function renderBody(){
+    function renderBody(){
           return(
               <View
                 style={{
@@ -277,13 +258,13 @@ const ImpAwbScreen = ({navigation,route}) =>{
         <View
             style={{
                 flex:1,
-                backgroundColor: COLORS.primaryALS
+                backgroundColor: COLORS.white
             }}
         >
             {renderHeader()}
             <View
                 style={{
-                    height:80,
+                    height:60,
                     backgroundColor:COLORS.white
                 }}
             ></View>

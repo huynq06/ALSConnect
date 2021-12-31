@@ -11,7 +11,6 @@ export const getLagi = (lagi_Id) =>{
             );
             const resData = await response.json();  
             let loadedLagiDetail;
-            console.log('resData.Status',resData.Status)
             loadedLagiDetail = new LagiDetail(
                 resData.Lagi_Identity,
                 resData.Mawb,
