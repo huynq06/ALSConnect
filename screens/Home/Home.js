@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   Keyboard,
+  Platform
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {COLORS, SIZES, FONTS, icons, images, dummyData} from '../../constants';
@@ -17,43 +18,44 @@ const Home = ({navigation}) => {
     return (
       <Header
         containerStyle={{
+          marginTop: Platform.OS=='ios'? 30:0,
           height: 60,
           paddingHorizontal: SIZES.padding,
           alignItems: 'center',
           backgroundColor: COLORS.white,
         }}
-        title="Home"
-        rightComponent={
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <TouchableOpacity
-              style={{
-                height: 60,
-                width: 60,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: COLORS.white,
-              }}>
-              <Image
-                source={icons.bell}
-                style={{
-                  width: 20,
-                  height: 20,
-                  tintColor: COLORS.secondaryALS,
-                }}
-              />
-              <View
-                style={{
-                  position: 'absolute',
-                  top: 10,
-                  right: 10,
-                  height: 10,
-                  width: 10,
-                  backgroundColor: COLORS.red,
-                  borderRadius: 5,
-                }}></View>
-            </TouchableOpacity>
-          </View>
-        }
+        title="Home Screen"
+        // rightComponent={
+        //   <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        //     <TouchableOpacity
+        //       style={{
+        //         height: 60,
+        //         width: 60,
+        //         justifyContent: 'center',
+        //         alignItems: 'center',
+        //         backgroundColor: COLORS.white,
+        //       }}>
+        //       <Image
+        //         source={icons.bell}
+        //         style={{
+        //           width: 20,
+        //           height: 20,
+        //           tintColor: COLORS.secondaryALS,
+        //         }}
+        //       />
+        //       <View
+        //         style={{
+        //           position: 'absolute',
+        //           top: 10,
+        //           right: 10,
+        //           height: 10,
+        //           width: 10,
+        //           backgroundColor: COLORS.red,
+        //           borderRadius: 5,
+        //         }}></View>
+        //     </TouchableOpacity>
+        //   </View>
+        // }
         /*  rightComponent={<CartQuantityButton quantity={cartLagiQuantity} onPress={()=>navigation.navigate("CartLagi")} />} */
       />
     );

@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   SafeAreaView,
-  LogBox
+  LogBox,
+  Platform
 } from 'react-native';
 import Tabs from '../../../components/Tabs';
 import {
@@ -238,7 +239,7 @@ const onSelectOrderHandler = item =>{
             containerStyle={{
                 height:60,
                 paddingHorizontal: SIZES.padding,
-              //  marginTop:SIZES.padding,
+                marginTop: Platform.OS =='ios'? SIZES.padding : 0,
                 alignItems:'center',
                 backgroundColor:COLORS.white,
              //   borderBottomRightRadius:SIZES.radius*2
@@ -273,7 +274,7 @@ const onSelectOrderHandler = item =>{
       {renderHeader()}
       <View
         style={{
-          marginTop:60
+          marginTop:Platform.OS=='ios'? 90: 60
         }}
       ></View>
       {/* DateFilter */}

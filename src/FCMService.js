@@ -11,7 +11,7 @@ class FCMService {
   };
   registerAppWithFCM = async () => {
     if (Platform.OS === 'ios') {
-      await messaging().registerDeviceForRemoteMessages();
+      // await messaging().registerDeviceForRemoteMessages();
       await messaging().setAutoInitEnabled(true);
     }
   };
@@ -63,9 +63,11 @@ class FCMService {
         console.log('[FCMService] Delete token error ', error);
       });
   };
-  subcribeTopic = (topic) => {
-      messaging().subscribeToTopic(topic).then(()=>console.log('s',topic))
-  }
+  subcribeTopic = topic => {
+    messaging()
+      .subscribeToTopic(topic)
+      .then(() => console.log('s', topic));
+  };
   createNotificationListeners = (
     onRegister,
     onNotification,

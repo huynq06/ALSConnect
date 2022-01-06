@@ -1,5 +1,5 @@
 import React, {useEffect, useState,useCallback} from 'react';
-import {View, StyleSheet, ScrollView, Image,TouchableOpacity,ActivityIndicator,RefreshControl} from 'react-native';
+import {View, StyleSheet, ScrollView, Image,TouchableOpacity,ActivityIndicator,RefreshControl, Platform} from 'react-native';
 import Tabs from '../../../components/Tabs';
 import {
   COLORS,
@@ -28,6 +28,7 @@ const ImagePickerScreen = ({navigation,route}) =>{
                 paddingHorizontal: SIZES.padding,
                 alignItems: 'center',
                 backgroundColor: COLORS.white,
+                marginTop: Platform.OS == 'ios'? 30: 0
               }}
               title="Image Picker"
               leftComponent={
@@ -67,7 +68,7 @@ const ImagePickerScreen = ({navigation,route}) =>{
              {renderHeader()}
          <View
         style={{
-          height: 60,
+          height: Platform.OS=='ios'? 90 : 60,
           backgroundColor: COLORS.white,
         }}></View>
         
