@@ -61,7 +61,7 @@ const onPickUpLagiHandler = () =>{
           onPress = {toggleFavorite}
           >
             <Icon name="bolt" size={20} color= {currentLagiIsFavorite ? COLORS.yellow : COLORS.white} />
-     {/*      <Image source={icons.lighting}
+         {/*  <Image source={icons.lighting}
             style={{
               width:20,
               height:20,

@@ -11,7 +11,8 @@ import {
   Alert,
   Animated,
   LogBox,
-  ScrollView
+  ScrollView,
+  Platform
 } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from '../../components/Header';
@@ -103,6 +104,7 @@ const Notification = ({navigation}) =>{
       <Header
         containerStyle={{
           height: 60,
+          marginTop: Platform.OS=='ios' ? 30: 0,
           paddingHorizontal: SIZES.padding,
           alignItems: 'center',
           backgroundColor: COLORS.white,
@@ -186,8 +188,7 @@ const Notification = ({navigation}) =>{
         {renderHeader()}
       <View
         style={{
-          height: 60,
-          backgroundColor: COLORS.red,
+          height: Platform.OS=='ios'? 90: 60,
         }}></View>
         <Text
           style={{

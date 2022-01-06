@@ -1,21 +1,21 @@
-import React, { useRef, useState, useEffect } from "react";
-import { View, ImageBackground, Image, Animated,Keyboard } from "react-native";
-import { images, constants, Text, FONTS, SIZES, COLORS } from "../../constants";
-import TextButton from "../../components/TextButton";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-const AuthLayout = ({ title, subTitle, titleContailner, children }) => {
+import React, {useRef, useState, useEffect} from 'react';
+import {View, ImageBackground, Image, Animated, Keyboard,KeyboardAvoidingView} from 'react-native';
+import {images, constants, Text, FONTS, SIZES, COLORS} from '../../constants';
+import TextButton from '../../components/TextButton';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+const AuthLayout = ({title, subTitle, titleContailner, children}) => {
   const [keyboardStatus, setKeyboardStatus] = useState(undefined);
 
   useEffect(() => {
-    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
-      setKeyboardStatus("Keyboard Shown");
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardStatus('Keyboard Shown');
     });
-    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
-      setKeyboardStatus("Keyboard Hidden");
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardStatus('Keyboard Hidden');
     });
 
+    showSubscription.remove();
     return () => {
-      showSubscription.remove();
       hideSubscription.remove();
     };
   }, []);
@@ -25,21 +25,18 @@ const AuthLayout = ({ title, subTitle, titleContailner, children }) => {
         flex: 1,
         paddingVertical: SIZES.padding,
         backgroundColor: COLORS.white,
-      }}
-    >
+      }}>
       <KeyboardAwareScrollView
         keyboardDismissMode="on-drag"
         contentContainerStyle={{
           flex: 1,
           paddingHorizontal: SIZES.padding,
-        }}
-      >
+        }}>
         <View
           style={{
-            alignItems: "center",
-          //  backgroundColor:COLORS.red
-          }}
-        >
+            alignItems: 'center',
+            //  backgroundColor:COLORS.red
+          }}>
           {/* Logo */}
           <Image
             source={images.logoALS_full}
@@ -47,7 +44,7 @@ const AuthLayout = ({ title, subTitle, titleContailner, children }) => {
             style={{
               width: 150,
               height: 100,
-             // backgroundColor:COLORS.green
+              // backgroundColor:COLORS.green
             }}
           />
           {/* Title */}

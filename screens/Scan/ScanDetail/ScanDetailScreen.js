@@ -1,5 +1,5 @@
 import React, {useEffect, useState,useCallback} from 'react';
-import {View, StyleSheet, ScrollView, Image,TouchableOpacity,ActivityIndicator,RefreshControl, FlatList} from 'react-native';
+import {View, StyleSheet, ScrollView, Image,TouchableOpacity,ActivityIndicator,RefreshControl, FlatList, Platform} from 'react-native';
 import Tabs from '../../../components/Tabs';
 import {
   COLORS,
@@ -26,6 +26,7 @@ const dispatch = useDispatch();
             <Header
               containerStyle={{
                 height: 60,
+                marginTop: Platform.OS == 'ios'? 30:0,
                 paddingHorizontal: SIZES.padding,
                 alignItems: 'center',
                 backgroundColor: COLORS.white,
@@ -69,7 +70,7 @@ const dispatch = useDispatch();
                {renderHeader()}
          <View
         style={{
-          height: 60,
+          height: Platform.OS=='ios'? 90 : 60,
           backgroundColor: COLORS.white,
         }}></View>
         <View>

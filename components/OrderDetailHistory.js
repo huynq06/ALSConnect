@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import {dummyData, COLORS, SIZES, FONTS, icons, images} from '../constants';
 import {dateWithTime} from '../utils/dateHelpers';
-import Icon from 'react-native-vector-icons/FontAwesome';
 const OrderDetailHistory = ({customContainerStyle, history, onPress}) => {
   const renderItem = ({item, index}) => (
     <TouchableOpacity
@@ -21,11 +20,7 @@ const OrderDetailHistory = ({customContainerStyle, history, onPress}) => {
         paddingVertical: SIZES.base,
       }}
       onPress={() => onPress(item)}>
-      {item.isFavourite ? <Icon
-            name="bolt"
-            size={20}
-            color={COLORS.yellow}
-          />: <View style={{
+      {item.isFavourite ? <View></View>: <View style={{
               width:12,
               height:12
           }} /> }

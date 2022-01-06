@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   RefreshControl,
+  Platform,
 } from 'react-native';
 import Tabs from '../../../components/Tabs';
 import {
@@ -386,7 +387,7 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
         containerStyle={{
           height: 80,
           paddingHorizontal: SIZES.padding,
-          //  marginTop:SIZES.padding,
+           marginTop: Platform.OS=='ios'? SIZES.padding : 0,
           alignItems: 'center',
           backgroundColor: COLORS.primaryALS,
           //   borderBottomRightRadius:SIZES.radius*2
@@ -447,7 +448,7 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
       {renderHeader()}
       <View
         style={{
-          marginTop: 80,
+          marginTop: Platform.OS==='ios'? 110 : 80,
         }}></View>
       <Tabs
         tabs={tabs}

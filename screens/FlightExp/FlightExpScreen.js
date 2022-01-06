@@ -8,7 +8,8 @@ import {
   FlatList,
   ActivityIndicator,
   Alert,
-  ScrollView
+  ScrollView,
+  Platform
 } from 'react-native';
 
 import {useSelector, useDispatch} from 'react-redux';
@@ -170,7 +171,7 @@ const FlightExpScreen = ({navigation, route}) => {
         containerStyle={{
           height: 80,
           paddingHorizontal: SIZES.padding,
-          //  marginTop:SIZES.padding,
+          marginTop: Platform.OS=='ios'? 30 : 0,
           alignItems: 'center',
           backgroundColor: COLORS.white,
           //   borderBottomRightRadius:SIZES.radius*2
@@ -328,7 +329,7 @@ const FlightExpScreen = ({navigation, route}) => {
       {renderHeader()}
       <View
         style={{
-          height: 80,
+          height: Platform.OS=='ios'? 110: 80,
           backgroundColor: COLORS.white,
         }}></View>
       {renderSearch()}

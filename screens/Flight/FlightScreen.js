@@ -8,28 +8,31 @@ import {
   FlatList,
   ActivityIndicator,
   Alert,
-  ScrollView
+  ScrollView,
+  Platform,
 } from 'react-native';
 
 import {useSelector, useDispatch} from 'react-redux';
 
 import {SIZES, COLORS, icons, FONTS} from '../../constants';
 import Header from '../../components/Header';
-import * as loadingActions from '../../stores/actions/loadingActions'
+import * as loadingActions from '../../stores/actions/loadingActions';
 import Calendar from '../../components/Calendar/Calendar';
 import moment from 'moment';
 import Subtitle from '../../components/Subtitle';
 import FlightItem from '../../components/FlightItem';
-import { startOfDay,
-    startOfYesterday,
-    back7days,
-    back30days,
-    isYesterday,
-    isToday,
-    dateWithTime,
-  dateWithSec } from '../../utils/dateHelpers';
-    import * as flightsActions from '../../stores/actions/flights'
-    import { useToast } from "react-native-toast-notifications";
+import {
+  startOfDay,
+  startOfYesterday,
+  back7days,
+  back30days,
+  isYesterday,
+  isToday,
+  dateWithTime,
+  dateWithSec,
+} from '../../utils/dateHelpers';
+import * as flightsActions from '../../stores/actions/flights';
+import {useToast} from 'react-native-toast-notifications';
 const FlightScreen = ({navigation, route}) => {
   const {tokenId} = route.params;
   const [searchText, setSearchText] = useState('');
@@ -42,53 +45,56 @@ const FlightScreen = ({navigation, route}) => {
   const textInputRef = React.useRef();
   const toast = useToast();
   const flights = useSelector(state => {
-      const loadFlight = [];
-      if(searchText===''){
-          return  state.flights.flights
-      }else{
-        state.flights.flights.forEach((element, index)=>{
-            if((element.code+element.flightNo).includes(searchText)){
-                loadFlight.push(element);
-            }
-        })
-        return loadFlight;
-      }
-   
-  })
-  const favouriteFlights = useSelector(state => state.flights.favourtiteFlights)
+    const loadFlight = [];
+    if (searchText === '') {
+      return state.flights.flights;
+    } else {
+      state.flights.flights.forEach((element, index) => {
+        if ((element.code + element.flightNo).includes(searchText)) {
+          loadFlight.push(element);
+        }
+      });
+      return loadFlight;
+    }
+  });
+  const favouriteFlights = useSelector(
+    state => state.flights.favourtiteFlights,
+  );
   const setActive = item => {
     setActiveCalendar(false);
     item(true);
   };
   const dispatch = useDispatch();
- const loadFavouriteFlights =  useCallback(async () => {
-  setError(null);
-  setIsRefreshing(true);
-  try {
-      await dispatch(flightsActions.fetchFavouriteFlights('IMPORT'));
-  } catch (err) {
-    setError(err.message);
-  }
-  setIsRefreshing(false);
-}, [dispatch, setIsLoading, setError]);
-  const loadFlights = useCallback(async (code, number, date) => {
+  const loadFavouriteFlights = useCallback(async () => {
     setError(null);
     setIsRefreshing(true);
-  /*   dispatch(loadingActions.start({ key: 'fetchFlight' })) */
     try {
-      
-        await dispatch(flightsActions.fetchFlights(code, number, date));
+      await dispatch(flightsActions.fetchFavouriteFlights('IMPORT'));
     } catch (err) {
       setError(err.message);
-    }finally{
-   /*    dispatch(loadingActions.stop({ key: 'fetchFlight' })) */
     }
     setIsRefreshing(false);
   }, [dispatch, setIsLoading, setError]);
+  const loadFlights = useCallback(
+    async (code, number, date) => {
+      setError(null);
+      setIsRefreshing(true);
+      /*   dispatch(loadingActions.start({ key: 'fetchFlight' })) */
+      try {
+        await dispatch(flightsActions.fetchFlights(code, number, date));
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        /*    dispatch(loadingActions.stop({ key: 'fetchFlight' })) */
+      }
+      setIsRefreshing(false);
+    },
+    [dispatch, setIsLoading, setError],
+  );
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', ()=>{
-      loadFlights('','',dateWithSec(dateForFiltering))
-     loadFavouriteFlights()
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadFlights('', '', dateWithSec(dateForFiltering));
+      loadFavouriteFlights();
     });
 
     return () => {
@@ -97,79 +103,76 @@ const FlightScreen = ({navigation, route}) => {
   }, [loadFlights]);
   useEffect(() => {
     setIsLoading(true);
-   
-    const dateCheck = dateWithSec(dateForFiltering);
-    loadFlights('','',dateCheck).then(() => {
-      setIsLoading(false);
-    loadFavouriteFlights().then(() => {
-        setIsLoading(false);
-      }); 
-    });
-   
-  }, [dispatch, loadFlights,dateForFiltering]);
 
-//   useEffect(() => {
-//     focusScanText();
-//   }, [navigation]);
-//   const focusScanText = function () {
-//     setTimeout(() => {
-//       textInputRef.current.focus();
-//     }, 200);
-//   };
+    const dateCheck = dateWithSec(dateForFiltering);
+    loadFlights('', '', dateCheck).then(() => {
+      setIsLoading(false);
+      loadFavouriteFlights().then(() => {
+        setIsLoading(false);
+      });
+    });
+  }, [dispatch, loadFlights, dateForFiltering]);
+
+  //   useEffect(() => {
+  //     focusScanText();
+  //   }, [navigation]);
+  //   const focusScanText = function () {
+  //     setTimeout(() => {
+  //       textInputRef.current.focus();
+  //     }, 200);
+  //   };
   const onToggleCalendar = () => {
     toggleCalendar(prev => !prev);
   };
   const onChangeCalendar = date => {
     if (!date.from && !date.to) return;
     setActive(setActiveCalendar);
-  /*   if (!date.to) {
+    /*   if (!date.to) {
       if (isToday(date.from)) setActive(setActiveToday);
       else if (isYesterday(date.from) ) setActive(setActiveYesterday);
     } */
     setDateForFiltering(date.to ? date : date.from);
   };
-  const onChangeTextHandle = (text) =>{
-      setSearchText(text);
-  }
-  const toggleFavoriteHandler = (id) =>{
-    dispatch(flightsActions.addFavouriteFlights(id,tokenId,'IMPORT'))
-    if(favouriteFlights.includes(id)){
-      toast.show("Hủy nhận thống báo thành công",{
-        type:'error',
-        placement:'top',
-      swipeEnabled:true,
-      style:{
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor:COLORS.red
-      },
-        duration:2000,
-        animationType:'slide-in'
+  const onChangeTextHandle = text => {
+    setSearchText(text);
+  };
+  const toggleFavoriteHandler = id => {
+    dispatch(flightsActions.addFavouriteFlights(id, tokenId, 'IMPORT'));
+    if (favouriteFlights.includes(id)) {
+      toast.show('Hủy nhận thống báo thành công', {
+        type: 'error',
+        placement: 'top',
+        swipeEnabled: true,
+        style: {
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: COLORS.red,
+        },
+        duration: 2000,
+        animationType: 'slide-in',
+      });
+    } else {
+      toast.show('Đăng ký nhận thông báo thành công!', {
+        type: 'success',
+        placement: 'top',
+        swipeEnabled: true,
+        style: {
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: COLORS.green,
+        },
+        duration: 2000,
+        animationType: 'slide-in',
       });
     }
-    else{
-      toast.show("Đăng ký nhận thông báo thành công!",{
-        type:'success',
-        placement:'top',
-      swipeEnabled:true,
-      style:{
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor:COLORS.green
-      },
-        duration:2000,
-        animationType:'slide-in'
-      });
-    }
-   
-  }
+  };
   function renderHeader() {
     return (
       <Header
         containerStyle={{
           height: 80,
           paddingHorizontal: SIZES.padding,
-          //  marginTop:SIZES.padding,
+           marginTop: Platform.OS=='ios'? 30:0,
           alignItems: 'center',
           backgroundColor: COLORS.white,
           //   borderBottomRightRadius:SIZES.radius*2
@@ -202,18 +205,19 @@ const FlightScreen = ({navigation, route}) => {
   }
   function renderSearch() {
     return (
-      <View style={{
-          flexDirection:'row',
+      <View
+        style={{
+          flexDirection: 'row',
           marginHorizontal: SIZES.padding,
-          marginTop:SIZES.padding,
-      }}>
+          marginTop: SIZES.padding,
+        }}>
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             height: 45,
-             flex:1,
-        //   marginTop:SIZES.padding,
+            flex: 1,
+            //   marginTop:SIZES.padding,
             marginBottom: SIZES.base,
             paddingHorizontal: SIZES.radius,
             borderRadius: SIZES.radius,
@@ -232,7 +236,7 @@ const FlightScreen = ({navigation, route}) => {
               marginBottom: -5,
             }}>
             <TextInput
-           // onEndEditing={onSearchHandler}
+              // onEndEditing={onSearchHandler}
               ref={textInputRef}
               style={{
                 flex: 1,
@@ -250,9 +254,9 @@ const FlightScreen = ({navigation, route}) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            marginLeft:SIZES.base,
+            marginLeft: SIZES.base,
             marginBottom: 10,
-         // backgroundColor:COLORS.red
+            // backgroundColor:COLORS.red
           }}>
           <Calendar
             isVisible={isVisibleCalendar}
@@ -265,51 +269,50 @@ const FlightScreen = ({navigation, route}) => {
       </View>
     );
   }
-  function renderFlights(){
-      return(
-         <View
-            style={{
-                flex:1
+  function renderFlights() {
+    return (
+      <View
+        style={{
+          flex: 1,
+        }}>
+        {isLoading ? (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <ActivityIndicator size="large" color={COLORS.primaryALS} />
+          </View>
+        ) : (
+          <FlatList
+            numColumns={2}
+            onRefresh={() => loadFlights('', '', dateWithSec(dateForFiltering))}
+            refreshing={isRefreshing}
+            data={flights}
+            contentContainerStyle={{
+              marginTop: SIZES.padding,
+              marginHorizontal: SIZES.padding,
+              marginBottom: 20,
+              backgroundColor: COLORS.white,
             }}
-         >
-               {isLoading ? (
-                <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                  <ActivityIndicator size="large" color={COLORS.primaryALS} />
-                </View>)
-              : (<FlatList
-                numColumns={2}
-                onRefresh={()=>loadFlights('','',dateWithSec(dateForFiltering))}
-               refreshing={isRefreshing}
-                data={flights}
-                contentContainerStyle={{
-                    marginTop:SIZES.padding,
-                    marginHorizontal:SIZES.padding,
-                    marginBottom:20,
-                    backgroundColor:COLORS.white,
-                }}
-                ListFooterComponent={()=>{
-                    return(
-                        <View
-                            style={{
-                                height:15
-                            }}
-                        ></View>
-                    )   
-                }
-                   
-                }
-               columnWrapperStyle={{ justifyContent: 'space-between' }}
-                keyExtractor={(item) => item.id}
-                renderItem={(itemData) => (
-                    <FlightItem
-                      id={itemData.item.id}
-                      entity={itemData.item}
-                      onToggleFavourite = {toggleFavoriteHandler}
-                    />
-                  )}
-             />)}
-         </View>
-      )
+            ListFooterComponent={() => {
+              return (
+                <View
+                  style={{
+                    height: 15,
+                  }}></View>
+              );
+            }}
+            columnWrapperStyle={{justifyContent: 'space-between'}}
+            keyExtractor={item => item.id}
+            renderItem={itemData => (
+              <FlightItem
+                id={itemData.item.id}
+                entity={itemData.item}
+                onToggleFavourite={toggleFavoriteHandler}
+              />
+            )}
+          />
+        )}
+      </View>
+    );
   }
   function renderSuggesstion() {
     return (
@@ -327,7 +330,7 @@ const FlightScreen = ({navigation, route}) => {
       {renderHeader()}
       <View
         style={{
-          height: 80,
+          height: Platform.OS=='ios'? 110 : 80,
           backgroundColor: COLORS.white,
         }}></View>
       {renderSearch()}
@@ -335,15 +338,15 @@ const FlightScreen = ({navigation, route}) => {
         containerStyle={{
           marginHorizontal: SIZES.padding,
           paddingTop: SIZES.base,
-          borderBottomColor:COLORS.lightGray1,
-          borderBottomWidth:1
+          borderBottomColor: COLORS.lightGray1,
+          borderBottomWidth: 1,
         }}
         leftText=""
         date={dateForFiltering}
         withoutPadding
       />
-    {/*   {searchText === '' && renderSuggesstion()} */}
-    {renderFlights()}
+      {/*   {searchText === '' && renderSuggesstion()} */}
+      {renderFlights()}
     </View>
   );
 };

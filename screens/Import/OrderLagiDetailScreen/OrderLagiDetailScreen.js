@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {View, StyleSheet, ScrollView, Image,TouchableOpacity,SafeAreaView,LogBox} from 'react-native';
+import {View, StyleSheet, ScrollView, Image,TouchableOpacity,SafeAreaView,LogBox, Platform} from 'react-native';
 import Tabs from '../../../components/Tabs';
 import {
   COLORS,
@@ -71,7 +71,7 @@ const OrderLagiDetailSreen = ({navigation,route}) =>{
             containerStyle={{
                 height:60,
                 paddingHorizontal: SIZES.padding,
-              //  marginTop:SIZES.padding,
+                marginTop: Platform.OS=='ios'?  SIZES.padding : 0,
                 alignItems:'center',
                 backgroundColor:COLORS.white,
              //   borderBottomRightRadius:SIZES.radius*2
@@ -124,7 +124,7 @@ const OrderLagiDetailSreen = ({navigation,route}) =>{
               {renderHeader()}
               <View
         style={{
-          marginTop:60
+          marginTop:Platform.OS=="ios"? 90 : 60
         }}
       ></View>
                 <ScrollView>

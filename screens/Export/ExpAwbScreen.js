@@ -10,7 +10,8 @@ import {
   Alert,
   Animated,
   LogBox,
-  ScrollView
+  ScrollView,
+  Platform
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as authActions from '../../stores/actions/auth';
@@ -158,6 +159,7 @@ useEffect(()=>{
           height: 60,
           paddingHorizontal: SIZES.padding,
           alignItems: 'center',
+          marginTop: Platform.OS == 'ios'? 30 : 0,
           backgroundColor: COLORS.white,
         }}
         title="AWB Export"
@@ -598,9 +600,9 @@ useEffect(()=>{
       {renderHeader()}
       <View
         style={{
-          height: 60,
+          height: Platform.OS === 'ios' ? 90 : 60,
           backgroundColor: COLORS.white,
-        }}></View>
+        }} />
       {renderBody()}
       {/*  {renderFooter()} */}
     </View>
