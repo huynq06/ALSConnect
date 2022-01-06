@@ -4,7 +4,6 @@ import { dummyData, COLORS, SIZES, FONTS, icons } from "../constants";
 import Text from "../constants/Text";
 import IconLabel from "./IconLabel";
 import TextButton from "./TextButton";
-import Icon from 'react-native-vector-icons/FontAwesome';
 import RoundIcon from "./RoundIcon";
 import { useSelector, useDispatch } from "react-redux";
 const FlightItem = ({customContainerStyle,isFavourite = false,onPress,onToggleFavourite,entity}) =>{

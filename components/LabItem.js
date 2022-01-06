@@ -4,7 +4,6 @@ import { dummyData, COLORS, SIZES, FONTS, icons } from "../constants";
 import Text from "../constants/Text";
 import IconLabel from "./IconLabel";
 import TextButton from "./TextButton";
-import Icon from 'react-native-vector-icons/FontAwesome';
 //import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 
