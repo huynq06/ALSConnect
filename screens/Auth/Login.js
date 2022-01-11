@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect, useCallback} from 'react';
 import {
   View,
   ImageBackground,
@@ -18,6 +18,7 @@ import {
   COLORS,
   icons,
 } from '../../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextButton from '../../components/TextButton';
 import {useDispatch} from 'react-redux';
 import AuthLayout from './AuthLayout';
@@ -59,6 +60,13 @@ const Login = ({navigation}) => {
   const handleLogin = async () => {
     let action;
     setIsLoading(true);
+    await AsyncStorage.setItem('userLogin', email);
+    if(saveMe){
+      await AsyncStorage.setItem('passwordLogin', password);
+    }
+    else{
+      await AsyncStorage.removeItem("passwordLogin");
+    }
     action = authActions.login(email, password);
     setError(null);
     try {
@@ -69,6 +77,35 @@ const Login = ({navigation}) => {
       setIsLoading(false);
     }
   };
+  const setSaveMeHandler = async (value) =>{
+    if(value){
+      await   AsyncStorage.setItem('saveMe', 'true');
+    }
+    else {
+      await   AsyncStorage.setItem('saveMe', 'false');
+    }
+   setSaveMe(value);
+  }
+  console.log('Email:------------',email)
+  const getData = useCallback(async ()=>{
+    const saveMeStore = await AsyncStorage.getItem('saveMe');
+    const userLogin = await AsyncStorage.getItem('userLogin');
+    console.log('userLogin:',userLogin)
+    if(userLogin){
+      console.log('da chay vao getData')
+      setEmail(userLogin)
+    }
+    const passwordLogin = await AsyncStorage.getItem('passwordLogin');
+    if(passwordLogin){
+      setPassword(passwordLogin)
+    }
+    if(saveMeStore=='true'){
+      setSaveMe(true)
+    }
+  },[])
+  useEffect(() => {
+    getData()
+  }, []);
   useEffect(() => {
     if (error) {
       Alert.alert('An Error Occurred!', error, [{text: 'Okay'}]);
@@ -88,6 +125,7 @@ const Login = ({navigation}) => {
           label="User"
           keyboardType="email-address"
           autoCompleteType="email"
+          inputValue={email}
           inputStyle={{
             color: COLORS.primaryALS,
           }}
@@ -95,6 +133,7 @@ const Login = ({navigation}) => {
             //  utils.validateEmail(text, setEmailError);
             setEmail(text);
           }}
+          
           //  errMsg={emaiError}
           appendComponent={
             <View
@@ -120,6 +159,7 @@ const Login = ({navigation}) => {
         <FormInput
           label="Password"
           autoCompleteType="password"
+          inputValue={password}
           inputStyle={{
             color: COLORS.primaryALS,
           }}
@@ -158,7 +198,8 @@ const Login = ({navigation}) => {
           <CustomSwitch
             value={saveMe}
             onChange={value => {
-              setSaveMe(value);
+              setSaveMeHandler(value)
+             
             }}
           />
           <TouchableOpacity

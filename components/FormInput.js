@@ -16,6 +16,7 @@ const FormInput = ({
   inputStyle,
   autoCapitalize,
   containerStyle,
+  inputValue = '',
   inputContainerStyle
 }) => {
   return (
@@ -57,6 +58,7 @@ const FormInput = ({
             flex: 1,
             ...inputStyle,
           }}
+          value={inputValue}
           keyboardType={keyboardType}
           placeholder={placeHolder}
           placeholderTextColor={COLORS.gray}
