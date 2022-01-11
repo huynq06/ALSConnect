@@ -12,8 +12,9 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const ScanScreen = ({navigation}) => {
   const scanner = React.useRef();
   const onSuccess = e => {
-    navigation.navigate('ScanDetail', {stk: e.data});
     scanner.current?.reactivate();
+    navigation.navigate('ScanDetail', {stk: e.data});
+  
   };
   console.log('Scan Screen Start!!!');
   const makeSlideOutTranslation = (translationType, fromValue) => {
@@ -31,6 +32,8 @@ const ScanScreen = ({navigation}) => {
     <QRCodeScanner
       showMarker
       ref={scanner}
+      
+        
       // onRead={this.onSuccess.bind(this)}
       onRead={onSuccess}
       cameraStyle={{height: SCREEN_HEIGHT}}
