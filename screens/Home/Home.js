@@ -24,7 +24,7 @@ const Home = ({navigation}) => {
           alignItems: 'center',
           backgroundColor: COLORS.white,
         }}
-        title="Home Screen"
+        title="Home MAC"
         // rightComponent={
         //   <View style={{alignItems: 'center', justifyContent: 'center'}}>
         //     <TouchableOpacity

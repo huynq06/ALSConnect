@@ -55,8 +55,8 @@ const featuresImpData = [
     backgroundColor: COLORS.lightGreen,
     bgColor:['#e973ad', '#da5df2'],
     description: 'Bill',
-    screenName: 'CallTruckScreen',
-    srceenNavigagor: 'CallTruck',
+    screenName: 'InvoiceScreen',
+    srceenNavigagor: 'Invoice',
   },
   // {
   //   id: 104,
@@ -123,8 +123,8 @@ const featuresExpData = [
     description: 'HDDT',
     bgColor:['#7cf1fb', '#4ebefd'],
     backgroundColor: COLORS.lightyellow,
-    screenName: 'CallTruckScreen',
-    srceenNavigagor: 'CallTruck',
+    screenName: 'InvoiceScreen',
+    srceenNavigagor: 'Invoice',
   },
 ];
 const featuresGenaralData = [
