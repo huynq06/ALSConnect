@@ -53,7 +53,7 @@ const signupHandle = async () =>{
     navigation.navigate('SignupSuccess')
   }catch(err){
     console.log(err);
-   // Alert.alert(err);
+   Alert.alert(err.message);
     setError(err);
   //  Alert.alert(err);
     setIsLoading(false);
@@ -73,6 +73,7 @@ const signupHandle = async () =>{
         {/* Email */}
         <FormInput
           label="Email"
+          inputValue={email}
           keyboardType="email-address"
           autoCompleteType="email"
           onChange={(text) => {
@@ -105,6 +106,7 @@ const signupHandle = async () =>{
         {/* User Name */}
         <FormInput
           label="Phone"
+          inputValue={userName}
           onChange={(text) => {
           //  utils.validateEmail(text, setEmailError);
             setUserName(text);
@@ -135,6 +137,7 @@ const signupHandle = async () =>{
         />
         <FormInput
           label="Password"
+          inputValue={password}
           autoCompleteType="password"
           containerStyle={{
             marginTop: SIZES.radius,

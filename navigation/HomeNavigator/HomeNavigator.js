@@ -69,7 +69,6 @@ const HomeNavigator = ({navigation,token})=>{
              <Stack.Screen name="Scan" component={ScanScreen} />
              <Stack.Screen name="ScanDetail" component={ScanDetailScreen} />
              <Stack.Screen name="ImagePicker" component={ImagePickerScreen} />
-             
         </Stack.Navigator>
     )
 }

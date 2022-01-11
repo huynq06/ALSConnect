@@ -4,6 +4,7 @@ export const AUTHENTICATE = "AUTHENTICATE";
 export const SET_DID_TRY_AL = "SET_DID_TRY_AL";
 export const IS_DISSMISS = "IS_DISSMISS";
 export const SET_AVATAR = 'SET_AVATAR'
+export const RESET_PASSWORD = 'RESET_PASSWORD'
 export const setDidTryAL = () => {
   return { type: SET_DID_TRY_AL };
 };
@@ -80,6 +81,39 @@ export const changePassword = (currentPassword,newPassword) =>{
     }
   };
 }
+export const resetPassword = (email) =>{
+  return async ()=>{
+    const response =  await fetch(
+      "http://14.160.23.141:3434/api/email/send",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          receiverId: email,
+          userName: "",
+        }),
+      }
+    );
+    console.log('Send Email Response: ',response);
+    if (!response.ok) {
+      let message = 'Something went wrong!';
+      throw new Error(message);
+    }
+    const errorResData = await response.json();
+    console.log('Send Email errorResData',errorResData.isSuccess)
+    if (!response.isSuccess) {
+      let message = 'Something went wrong!';
+      if (errorResData.message === 'Email Not exist') {
+        message = 'EMAIL NOT FOUND!';
+      } 
+      throw new Error(message);
+    }
+  }
+  
+
+}
 export const changeAvatar = (avatarUrl) =>{
   return async (dispatch,getState) => {
     const userName = getState().auth.userName;
@@ -119,10 +153,9 @@ export const signup = (email,user,password) =>{
     })
     const resData = await response.json();
     if(!response.ok){
-      const errorResData = await response.json();
       let message = 'Something went wrong!';
-      if (errorResData.message) {
-        message = errorResData.message;
+      if (!resData.isSuccessed) {
+        message = resData.message;
       }
       throw new Error(message);
     }

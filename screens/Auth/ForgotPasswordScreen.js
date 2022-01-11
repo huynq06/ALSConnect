@@ -6,7 +6,8 @@ import {
   Animated,
   TouchableOpacity,
   ActivityIndicator,
-  Alert
+  Alert,
+  Keyboard
 } from "react-native";
 import {
   images,
@@ -26,11 +27,25 @@ import CustomSwitch from "../../components/CustomSwitch";
 import IconTextButton from "../../components/IconTextButton";
 import * as authActions from '../../stores/actions/auth'
 
-const ForgotPasswordScreen = () => {
+const ForgotPasswordScreen = ({navigation}) => {
     const [email,setEmail]= useState('');
     const [emailError,setEmailError]= useState('')
+    const dispatch = useDispatch()
      function isEnableSignUp(){
         return email != "" && emailError=="";
+    }
+    console.log('isEnableSignUp',isEnableSignUp())
+    const handleSendEmail = async () =>{
+        Keyboard.dismiss()
+        try {
+            await dispatch(authActions.resetPassword(email))
+            navigation.navigate("ResetPasswordSuccess",{email:email})
+          } catch (err) {
+            Alert.alert(err.message);
+            // setError(err.message);
+            // setIsLoading(false);
+          }
+        
     }
     return (
         <AuthLayout
@@ -52,6 +67,7 @@ const ForgotPasswordScreen = () => {
                 label='Email'
                 keyboardType="email-address"
                 autoCompleteType="email"
+                inputValue={email}
                 onChange={(value)=>{
                     //valid email
                     utils.validateEmail(value,setEmailError)
@@ -64,7 +80,7 @@ const ForgotPasswordScreen = () => {
                             justifyContent:'center'
                         }}
                     >
-                        <Image source={email=="" || (email!="" && emailError=="")? icons.correct : icons.cherry} style={{
+                        <Image source={email=="" || (email!="" && emailError=="")? icons.correct : icons.close} style={{
                             height:20,
                             width:20,
                             tintColor: email== "" ? COLORS.gray : (email != "" && emailError=="")? COLORS.green: COLORS.red
@@ -72,22 +88,21 @@ const ForgotPasswordScreen = () => {
                     </View>
                 }
             />
-            
-            <TextButton
-                label="Send Email"
-               disabled = {isEnableSignUp()? false : true}
-                customContainerStyle={{
-                    height:55,
-                    alignItems:'center',
-                    marginTop:SIZES.padding,
-                    borderRadius: SIZES.radius,
-                    backgroundColor: isEnableSignUp()?  COLORS.primary : COLORS.transparentPrimary
-                }}
-                onPress={()=>{navigation.navigate.goBack()}}
-            />
+              
           
         </View>
         {/* Footer */}
+        <TextButton
+                 label="Send Email"
+                 disabled={!isEnableSignUp()}
+                buttonContainerStyle={{
+                    height:55,
+                    marginBottom: SIZES.padding,
+                    borderRadius: SIZES.radius,
+                    backgroundColor: isEnableSignUp()? COLORS.primaryALS : COLORS.transparentprimaryALS
+                }}
+                onPress={()=>handleSendEmail()}
+            />
         
     </AuthLayout>
     )

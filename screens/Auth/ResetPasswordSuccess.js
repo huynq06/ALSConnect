@@ -1,0 +1,64 @@
+import React, { useEffect, useState } from 'react';
+import {
+    View,
+    BackHandler,
+    Image
+} from 'react-native';
+import {
+    images,
+    constants,
+    Text,
+    FONTS,
+    SIZES,
+    COLORS,
+    dummyData,
+    icons,
+  } from "../../constants";
+  import TextButton from '../../components/TextButton';
+const ResetPasswordSuccess = ({ navigation,route }) => {
+    const {email} = route.params
+    useEffect(()=>{
+        const backHandler = BackHandler.addEventListener('hardwareBackPress',()=>{return true})
+        return ()=> backHandler.remove()
+    },[])
+    return (
+        <View
+            style={{
+                flex: 1,
+                paddingHorizontal:SIZES.padding,
+                backgroundColor:COLORS.white
+            }}
+        >
+            <View
+                style={{
+                    flex:1,
+                    alignItems:'center',
+                    justifyContent:'center'
+                }}
+            >
+                <Image
+                    source={images.success}
+                    style={{
+                        width:150,
+                        height:150
+                    }}
+                    resizeMode="contain"
+                />
+                <Text body3 style={{marginTop:SIZES.padding}}>Reset Password successfully! An Email has sent to {email}. Please check Email!!</Text>
+                {/* <Text style={{textAlign:'center',marginTop:SIZES.base}} darkGray body3>Payment was successfully made!</Text> */}
+            </View>
+            <TextButton
+                label="Login"
+                buttonContainerStyle={{
+                    height:55,
+                    marginBottom: SIZES.padding,
+                    borderRadius: SIZES.radius,
+                    backgroundColor:COLORS.primaryALS
+                }}
+                onPress={()=>navigation.navigate('Login')}
+            />
+        </View>
+    )
+}
+
+export default ResetPasswordSuccess
