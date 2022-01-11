@@ -70,11 +70,8 @@ const HomeNavigator = ({navigation,token})=>{
              <Stack.Screen name="Scan" component={ScanScreen} />
              <Stack.Screen name="ScanDetail" component={ScanDetailScreen} />
              <Stack.Screen name="ImagePicker" component={ImagePickerScreen} />
-<<<<<<< HEAD
-=======
              <Stack.Screen name="Invoice" component={InvoiceScreen} />
              
->>>>>>> 1c44b8165ad915002bca766492b06b6b357717c1
         </Stack.Navigator>
     )
 }
