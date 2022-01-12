@@ -138,7 +138,10 @@ let App = () => {
         }
       });
     function onRegister(_token) {
-      //   console.log('[APP] onRegister',token)
+      if(Platform.OS==='ios'){
+        setToken(_token);
+      }
+        console.log('[APP] onRegister------------------',_token)
     }
     localNotificationService.createDefaultChannels();
     function onNotification(notify) {
@@ -161,7 +164,10 @@ let App = () => {
       Alert.alert('Open notification:' + notify.body);
     }
     function onToken(token) {
-      setToken(token.token);
+      if(Platform.OS==='android'){
+        setToken(token.token);
+      }
+      
     }
 
     //  console.log('tokeSave: ',tokeSave)
