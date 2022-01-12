@@ -29,6 +29,7 @@ import labsReducer from './stores/reducers/labs';
 import expTrackStatusReducer from './stores/reducers/expTrackStatus';
 import expTrackCustomStatusReducer from './stores/reducers/expTrackCustomStatus';
 import {requestMultiple, PERMISSIONS} from 'react-native-permissions';
+import ForegroundHandler from './src/ForegroundHandler';
 import {useToast} from 'react-native-toast-notifications';
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -137,7 +138,10 @@ let App = () => {
         }
       });
     function onRegister(_token) {
-      //   console.log('[APP] onRegister',token)
+      if(Platform.OS==='ios'){
+        setToken(_token);
+      }
+        console.log('[APP] onRegister------------------',_token)
     }
     localNotificationService.createDefaultChannels();
     function onNotification(notify) {
@@ -160,7 +164,10 @@ let App = () => {
       Alert.alert('Open notification:' + notify.body);
     }
     function onToken(token) {
-      setToken(token.token);
+      if(Platform.OS==='android'){
+        setToken(token.token);
+      }
+      
     }
 
     //  console.log('tokeSave: ',tokeSave)
@@ -197,6 +204,7 @@ let App = () => {
   return (
     <Provider store={store}>
       <ToastProvider>
+        <ForegroundHandler />
         <StatusBar
           animated={true}
           backgroundColor={COLORS.white}
