@@ -29,6 +29,7 @@ import labsReducer from './stores/reducers/labs';
 import expTrackStatusReducer from './stores/reducers/expTrackStatus';
 import expTrackCustomStatusReducer from './stores/reducers/expTrackCustomStatus';
 import {requestMultiple, PERMISSIONS} from 'react-native-permissions';
+import ForegroundHandler from './src/ForegroundHandler';
 import {useToast} from 'react-native-toast-notifications';
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -197,6 +198,7 @@ let App = () => {
   return (
     <Provider store={store}>
       <ToastProvider>
+        <ForegroundHandler />
         <StatusBar
           animated={true}
           backgroundColor={COLORS.white}
