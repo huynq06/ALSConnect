@@ -5,9 +5,10 @@
 #import <CodePush/CodePush.h>
 #import <React/RCTRootView.h>
 #import <Firebase.h>
-#import <UserNotifications/UserNotifications.h>
-#import <RNCPushNotificationIOS.h>
-#import <UserNotifications/UNUserNotificationCenter.h>
+// #import <UserNotifications/UserNotifications.h>
+// #import <RNCPushNotificationIOS.h>
+// #import <UserNotifications/UNUserNotificationCenter.h>
+#import "RNFBMessagingModule.h"
 @import Firebase;
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -36,32 +37,34 @@ static void InitializeFlipper(UIApplication *application) {
   InitializeFlipper(application);
 #endif
 // Start I added
-  [FIRApp configure];
+  // [FIRApp configure];
    
-   if ([UNUserNotificationCenter class] != nil) {
-     // iOS 10 or later
-     // For iOS 10 display notification (sent via APNS)
-       UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert |
-         UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
-     [[UNUserNotificationCenter currentNotificationCenter]
-         requestAuthorizationWithOptions:authOptions
-         completionHandler:^(BOOL granted, NSError * _Nullable error) {
-           // ...
-         }];
-   } else {
-     // iOS 10 notifications aren't available; fall back to iOS 8-9 notifications.
+  //  if ([UNUserNotificationCenter class] != nil) {
+  //    // iOS 10 or later
+  //    // For iOS 10 display notification (sent via APNS)
+  //      UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert |
+  //        UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
+  //    [[UNUserNotificationCenter currentNotificationCenter]
+  //        requestAuthorizationWithOptions:authOptions
+  //        completionHandler:^(BOOL granted, NSError * _Nullable error) {
+  //          // ...
+  //        }];
+  //  } else {
+  //    // iOS 10 notifications aren't available; fall back to iOS 8-9 notifications.
     
-   }
+  //  }
 
-   [application registerForRemoteNotifications];
+  //  [application registerForRemoteNotifications];
    
     
-   [FIRMessaging messaging].autoInitEnabled = YES;
+  //  [FIRMessaging messaging].autoInitEnabled = YES;
   // End I added
+  NSDictionary *appProperties = [RNFBMessagingModule addCustomPropsToUserProps:nil withLaunchOptions:launchOptions];  
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"ALSConnect"
                                             initialProperties:nil];
+                                        
 
   if (@available(iOS 13.0, *)) {
       rootView.backgroundColor = [UIColor systemBackgroundColor];
@@ -78,51 +81,51 @@ static void InitializeFlipper(UIApplication *application) {
 }
 // Start I added
 
-- (void)messaging:(FIRMessaging *)messaging didReceiveRegistrationToken:(NSString *)fcmToken {
-    NSLog(@"FCM registration token: %@", fcmToken);
-    // Notify about received token.
-    NSDictionary *dataDict = [NSDictionary dictionaryWithObject:fcmToken forKey:@"token"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:
-     @"FCMToken" object:nil userInfo:dataDict];
-}
+// - (void)messaging:(FIRMessaging *)messaging didReceiveRegistrationToken:(NSString *)fcmToken {
+//     NSLog(@"FCM registration token: %@", fcmToken);
+//     // Notify about received token.
+//     NSDictionary *dataDict = [NSDictionary dictionaryWithObject:fcmToken forKey:@"token"];
+//     [[NSNotificationCenter defaultCenter] postNotificationName:
+//      @"FCMToken" object:nil userInfo:dataDict];
+// }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-  [FIRMessaging messaging].APNSToken = deviceToken;
-  [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-}
+// - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+//   [FIRMessaging messaging].APNSToken = deviceToken;
+//   [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+// }
 
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
-{
-  [RNCPushNotificationIOS didRegisterUserNotificationSettings:notificationSettings];
-}
+// - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+// {
+//   [RNCPushNotificationIOS didRegisterUserNotificationSettings:notificationSettings];
+// }
 
-// Required for the notification event. You must call the completion handler after handling the remote notification.
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
-  [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
-  [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
-}
+// // Required for the notification event. You must call the completion handler after handling the remote notification.
+// - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+// fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+// {
+//   [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
+//   [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+// }
 
-// Required for the registrationError event.
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
-{
-  [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
-}
+// // Required for the registrationError event.
+// - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+// {
+//   [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
+// }
 
-// Required for the localNotification event.
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-  [RNCPushNotificationIOS didReceiveLocalNotification:notification];
-}
+// // Required for the localNotification event.
+// - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+// {
+//   [RNCPushNotificationIOS didReceiveLocalNotification:notification];
+// }
 
-// Called when a notification is delivered to a foreground app.
--(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
-  {
-    NSDictionary *userInfo = notification.request.content.userInfo;
-    [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
-    completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
-  }
+// // Called when a notification is delivered to a foreground app.
+// -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+//   {
+//     NSDictionary *userInfo = notification.request.content.userInfo;
+//     [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
+//     completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
+//   }
 
 
 // End I added
