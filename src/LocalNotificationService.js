@@ -1,7 +1,5 @@
 import PushNotification, {Importance} from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import * as tokenActions from '../stores/actions/token';
-import {useSelector, useDispatch} from 'react-redux';
 import {Platform} from 'react-native';
 class LocalNotificationService {
   configure = (onOpenNotification, onToken) => {

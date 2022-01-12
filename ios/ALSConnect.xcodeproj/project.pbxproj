@@ -53,9 +53,9 @@
 		154B9FC72784252700AAB115 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 154B9F9E2784252700AAB115 /* Poppins-Medium.ttf */; };
 		154B9FC82784252700AAB115 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 154B9F9F2784252700AAB115 /* Roboto-Medium.ttf */; };
 		154B9FC92784252700AAB115 /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 154B9FA02784252700AAB115 /* Rubik-Bold.ttf */; };
-		1570BA582782A2EB004C22B4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1570BA572782A2EB004C22B4 /* GoogleService-Info.plist */; };
 		157FA8C627830726003F22C0 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 157FA8C527830726003F22C0 /* OpenSans-Bold.ttf */; };
 		157FA8C82783074E003F22C0 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 157FA8C72783074E003F22C0 /* Poppins-Bold.ttf */; };
+		159286DD278E86CB00FBECE4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 159286DC278E86CB00FBECE4 /* GoogleService-Info.plist */; };
 		5F8BB5BB8C576BA401387670 /* libPods-ALSConnect-ALSConnectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 783785C57E517B77634D4643 /* libPods-ALSConnect-ALSConnectTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		F52682DEFE7D5A2C92E05CD5 /* libPods-ALSConnect.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 498C3961C959B52457BB2C9D /* libPods-ALSConnect.a */; };
@@ -131,9 +131,9 @@
 		154B9F9E2784252700AAB115 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Medium.ttf"; path = "../../../../Documents/Mobile/ALSConnect/assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		154B9F9F2784252700AAB115 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Medium.ttf"; path = "../../../../Documents/Mobile/ALSConnect/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		154B9FA02784252700AAB115 /* Rubik-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Rubik-Bold.ttf"; path = "../../../../Documents/Mobile/ALSConnect/assets/fonts/Rubik-Bold.ttf"; sourceTree = "<group>"; };
-		1570BA572782A2EB004C22B4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		157FA8C527830726003F22C0 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Bold.ttf"; path = "../assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		157FA8C72783074E003F22C0 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		159286DC278E86CB00FBECE4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1CA6DC50AA89423F90D37381 /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-BlackItalic.ttf"; path = "../assets/fonts/Poppins-BlackItalic.ttf"; sourceTree = "<group>"; };
 		28095205EE184429AA1D9389 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		298BEA74C5024573B84645D2 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Italic.ttf"; path = "../assets/fonts/Poppins-Italic.ttf"; sourceTree = "<group>"; };
@@ -237,8 +237,8 @@
 		13B07FAE1A68108700A75B9A /* ALSConnect */ = {
 			isa = PBXGroup;
 			children = (
+				159286DC278E86CB00FBECE4 /* GoogleService-Info.plist */,
 				153B878A278D6C3400401038 /* ALSConnect.entitlements */,
-				1570BA572782A2EB004C22B4 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -509,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				154B9FA12784252700AAB115 /* Poppins-Regular.ttf in Resources */,
+				159286DD278E86CB00FBECE4 /* GoogleService-Info.plist in Resources */,
 				154B9FA22784252700AAB115 /* Poppins-LightItalic.ttf in Resources */,
 				154B9FA32784252700AAB115 /* Roboto-MediumItalic.ttf in Resources */,
 				154B9FA42784252700AAB115 /* Poppins-Italic.ttf in Resources */,
@@ -554,7 +555,6 @@
 				157FA8C627830726003F22C0 /* OpenSans-Bold.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				1570BA582782A2EB004C22B4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
