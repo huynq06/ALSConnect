@@ -24,8 +24,10 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useToast} from 'react-native-toast-notifications';
 import {useSelector, useDispatch} from 'react-redux';
 import * as authAction from '../../stores/actions/auth';
+import api from '../../utils/apiHelper'
 const Setting = ({navigation, route}) => {
   const dispatch = useDispatch();
+  const userName = useSelector(state=>state.auth.userName)
   const toast = useToast();
   const options = {
     title: 'Select Image',
@@ -72,8 +74,6 @@ const Setting = ({navigation, route}) => {
     } else if (response.customButton) {
       console.log('User tapped custom button: ', response.customButton);
     } else {
-      /*       if (loading) return; */
-      /*     startLoading({key: 'deliverDetail'}); */
       if (Array.isArray(response.assets) && response.assets.length > 0) {
         let firstAssets = response.assets[0];
         let addFile = {
@@ -86,8 +86,13 @@ const Setting = ({navigation, route}) => {
         };
         let form = new FormData();
         form.append('File', addFile);
-        console.log(firstAssets?.uri.substring(7));
-        dispatch(authAction.changeAvatar(firstAssets?.uri));
+        api.post(
+          '/api/Upload/uploadImage',
+          form
+        ).then(({data})=>{
+          dispatch(authAction.changeAvatar(firstAssets?.uri));
+        })
+      
       }
     }
   };
@@ -210,7 +215,7 @@ const Setting = ({navigation, route}) => {
               color: COLORS.gray,
               ...FONTS.h3,
             }}>
-            Nguyen Quang Huy
+            {userName}
           </Text>
         </View>
       </View>
