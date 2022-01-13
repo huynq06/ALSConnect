@@ -86,7 +86,6 @@ const Login = ({navigation}) => {
     }
    setSaveMe(value);
   }
-  console.log('Email:------------',email)
   const getData = useCallback(async ()=>{
     const saveMeStore = await AsyncStorage.getItem('saveMe');
     const userLogin = await AsyncStorage.getItem('userLogin');
