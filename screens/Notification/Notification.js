@@ -141,6 +141,8 @@ const Notification = ({navigation}) =>{
     return(
       <FlatList
         data={notificationData}
+        refreshing={isRefreshing}
+        onRefresh={()=>getNotificationList()}
         keyExtractor={item=>`Notification-${item.id}}`}
         renderItem={({item,index})=>{
           return(

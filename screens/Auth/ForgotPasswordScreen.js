@@ -41,7 +41,17 @@ const ForgotPasswordScreen = ({navigation}) => {
             await dispatch(authActions.resetPassword(email))
             navigation.navigate("ResetPasswordSuccess",{email:email})
           } catch (err) {
-            Alert.alert(err.message);
+           // Alert.alert(err.message);
+           Alert.alert('Thông báo', err.message, [
+            { text: 'OK', style: 'default' },
+            // {
+            //   text: 'Yes',
+            //   style: 'destructive',
+            //   onPress: () => {
+            //     dispatch(productsActions.deleteProduct(id));
+            //   }
+            // }
+          ]);
             // setError(err.message);
             // setIsLoading(false);
           }

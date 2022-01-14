@@ -103,6 +103,14 @@ const awbTrackStatus = useSelector(state=>{
           height: 60,
           backgroundColor: COLORS.white,
         }}></View>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={()=>loadTrackStatus(labId)}
+            />
+          }
+        >
         <View
         style={{
           marginTop: SIZES.padding,
@@ -194,6 +202,8 @@ const awbTrackStatus = useSelector(state=>{
           })}
         </View>
       </View>
+        </ScrollView>
+        
         
         </View>
     )

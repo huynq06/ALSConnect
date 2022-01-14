@@ -50,6 +50,7 @@ const ImpAwbScreen = ({navigation, route}) => {
   const onChangeTextHandle = text => {
     setSearchText(text);
     if (text.length === 11) {
+      Keyboard.dismiss()
       setLoading(true);
       loadLagis(text).then(() => {
         setLoading(false);

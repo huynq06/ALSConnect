@@ -11,7 +11,9 @@ import {
   Animated,
   LogBox,
   ScrollView,
-  Platform
+  Platform,
+  Keyboard,
+  RefreshControl
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as authActions from '../../stores/actions/auth';
@@ -34,7 +36,7 @@ import { set } from 'lodash';
 const ExpAwbScreen = ({navigation, route}) => {
   const labsLoaded = useSelector(state => state.labs.labs);
   const labIdent = useSelector(state=>state.labs.labIdent)
-
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const {tokenId} = route.params;
   const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(false);
@@ -46,12 +48,14 @@ const ExpAwbScreen = ({navigation, route}) => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, []);
   const loadLabs = useCallback(
-    async text => {
+    async (text) => {
       setError(null);
+      setIsRefreshing(true);
       try {
         await dispatch(labsAction.getLab(text));
       } catch (err) {}
       finally{
+        setIsRefreshing(false);
       }
     },
     [dispatch,labsLoaded,isFavourite],
@@ -62,6 +66,7 @@ useEffect(()=>{
   const onChangeTextHandle = text => {
     setSearchText(text);
     if (text.length === 11) {
+      Keyboard.dismiss()
       setLoading(true);
       loadLabs(text).then(() => {
         setLoading(false);
@@ -144,7 +149,7 @@ useEffect(()=>{
               flex: 1,
               ...FONTS.body3,
             }}
-            placeholder="Search AWB...ex:16062287595     "
+            placeholder="Search AWB...ex:16040662451     "
             value={searchText}
             onChangeText={text => onChangeTextHandle(text)}
           />
@@ -197,6 +202,12 @@ useEffect(()=>{
           <ActivityIndicator size="large" color={COLORS.primaryALS} />
         </View>
       ) : <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefreshing}
+          onRefresh={()=>loadLabs(searchText)}
+        />
+      }
         style={{
           backgroundColor: COLORS.white,
           marginTop: SIZES.base,

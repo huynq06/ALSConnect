@@ -133,18 +133,18 @@ const tags = [
 const track_order_status = [
   {
     id: 1,
-    title: 'Not Recived',
-    sub_title: 'Your awb has not received',
+    title: 'Chưa nhận hàng',
+    sub_title: 'Vận đơn của bạn chưa tới ALSC',
   },
   {
     id: 2,
-    title: 'Operating',
-    sub_title: 'Your awb has been operating',
+    title: 'Đang khai thác',
+    sub_title: 'Vận đơn của bạn đang được khai thác xong',
   },
   {
     id: 3,
-    title: 'Done Execute',
-    sub_title: 'Your awb has been done Execute',
+    title: 'Khai thác xong',
+    sub_title: 'Vận đơn đã sẵn sàng trả hàng',
   },
   {
     id: 4,

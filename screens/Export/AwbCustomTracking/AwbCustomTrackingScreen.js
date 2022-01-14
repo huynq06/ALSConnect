@@ -38,7 +38,6 @@ const dispatch = useDispatch();
       setIsLoading(false);
     })
   },[dispatch])
-  console.log('isLoading------------------------------------------------------------',isLoading)
   const clearTrackCustom = () =>{
     dispatch(labsAction.clearTrackCusTomStatus())
   }
