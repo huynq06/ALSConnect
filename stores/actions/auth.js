@@ -40,8 +40,13 @@ export const login = (email, password) => {
       }
     );
     if (!response.ok) {
-      const errorResData = await response.toString();
-      throw new Error('Co loi xay ra');
+     // const errorResData = await response.json();
+      //console.log('LOGIN RESPONSE----------',errorResData)
+      let message = 'Something went wrong!';
+      if(response.status===500){
+        message = "wrong username or password"
+      }
+      throw new Error(message);
     }
     const resData = await response.json();
     dispatch(authenticate(resData.id, resData.token,resData.name,resData.avatarUrl));
