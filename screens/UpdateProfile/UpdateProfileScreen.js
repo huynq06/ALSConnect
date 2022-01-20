@@ -14,14 +14,11 @@ import {
   SIZES,
   constants,
   icons,
-  images,
-  theme,
 } from '../../constants';
 import Header from '../../components/Header';
 import FormInput from '../../components/FormInput';
-import {useDispatch,useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import TextButton from '../../components/TextButton';
-import {utils} from '../../utils';
 import * as authActions from '../../stores/actions/auth';
 import LineDivider from '../../components/LineDivider';
 import TextRadioButton from '../../components/TextRadioButton';
@@ -29,16 +26,7 @@ import ModalFilter from './ModalFilter';
 import TextIconButton from '../../components/TextIconButton';
 import tinh_tp from '../../constants/tinh_tp';
 import quan_huyen from '../../constants/quan_huyen';
-import DatePicker from 'react-native-date-picker'
-import {
-  startOfDay,
-  startOfYesterday,
-  back7days,
-  back30days,
-  isYesterday,
-  isToday,
-  dateWithTime
-} from '../../utils/dateHelpers';
+import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 const PICKER_MODE = {
   date: 'date',
@@ -46,57 +34,53 @@ const PICKER_MODE = {
 };
 
 const UpdateProfileScreen = ({navigation, route}) => {
-  const fullNameApi = useSelector(state=>state.auth.fullName)
-  const dobApi = useSelector(state=>state.auth.dob)
-  const cityApi = useSelector(state=>state.auth.city)
-  const cccdApi =useSelector(state=>state.auth.cccd)
-  const districtApi =useSelector(state=>state.auth.district)
-  const wardApi = useSelector(state=>state.auth.ward)
-  const email = useSelector(state=>state.auth.email)
+  const fullNameApi = useSelector(state => state.auth.fullName);
+  const dobApi = useSelector(state => state.auth.dob);
+  const cityApi = useSelector(state => state.auth.city);
+  const cccdApi = useSelector(state => state.auth.cccd);
+  const districtApi = useSelector(state => state.auth.district);
+  const wardApi = useSelector(state => state.auth.ward);
+  const email = useSelector(state => state.auth.email);
   const [sex, setSex] = useState(0);
   const [showFilterModel, setShowFilterModel] = useState(false);
   const [city, setCity] = useState([]);
   const [cityLabel, setCityLabel] = useState(cityApi);
-  const [fullName,setFullName] = useState(fullNameApi);
+  const [fullName, setFullName] = useState(fullNameApi);
   const [cityId, setCityId] = useState(0);
   const [district, setDistrict] = useState([]);
   const [districtLabel, setDistrictLabel] = useState(districtApi);
-  const [districtId,setDistrictId] = useState(0)
+  const [districtId, setDistrictId] = useState(0);
   const [ward, setWard] = useState([]);
   const [wardName, setWardName] = useState(wardApi);
   const [target, setTarget] = useState('city');
   const [loading, setLoading] = useState(false);
-  const [date, setDate] = useState(new Date())
-  const [birthday,setBirthday]= useState(dobApi)
-  const [cccd,setCccd] = useState(cccdApi);
+  const [date, setDate] = useState(new Date());
+  const [birthday, setBirthday] = useState(dobApi);
+  const [cccd, setCccd] = useState(cccdApi);
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const [filterDate, setFilterDate] = useState({
     show: false,
     mode: PICKER_MODE.date,
-    val: new Date()
+    val: new Date(),
   });
-  const onDateChange = (date) => {
-    setDate(date)
-  }
-
+  const onDateChange = date => {
+    setDate(date);
+  };
 
   const onHandlerFilter = value => {};
   const getWardList = async function (id) {
-     if (loading) return;
-     setLoading(true);
-     console.log('https://provinces.open-api.vn/api/d/' +id+'?depth=2')
+    if (loading) return;
+    setLoading(true);
+    console.log('https://provinces.open-api.vn/api/d/' + id + '?depth=2');
     // setIsRefreshing(true);
-    fetch('https://provinces.open-api.vn/api/d/' +id+'?depth=2', {
+    fetch('https://provinces.open-api.vn/api/d/' + id + '?depth=2', {
       method: 'GET',
       headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
     })
       .then(response => response.json())
       .then(responseJson => {
-        /*   if (!responseJson || !responseJson.Space || !responseJson.Data) throw new Error(JSON.stringify(responseJson));
-            if (!Array.isArray(responseJson.Data)) throw new Error('Dữ liệu trả về lỗi.'); */
-        /*     setSpaceData({Floor1: responseJson?.Space?.Floor1, Floor2: responseJson?.Space?.Floor2}) */
         let wardList = [];
         responseJson.wards.forEach((item, index) => {
           wardList.push({
@@ -130,16 +114,15 @@ const UpdateProfileScreen = ({navigation, route}) => {
     setShowFilterModel(true);
   };
 
-  const HandleSelectWard = async () =>{
+  const HandleSelectWard = async () => {
     setTarget('ward');
     setShowFilterModel(true);
-   
-  }
+  };
   const onSelect = async (item, target) => {
     if (target === 'city') {
       setCityLabel(item.name);
-      setDistrictLabel('')
-      setWardName('')
+      setDistrictLabel('');
+      setWardName('');
       const districtArr = [];
       for (const key in quan_huyen) {
         if (quan_huyen[key].parent_code == item.id) {
@@ -150,42 +133,47 @@ const UpdateProfileScreen = ({navigation, route}) => {
         }
       }
       setDistrict(districtArr);
-    } else if(target==='districts') {
+    } else if (target === 'districts') {
       setDistrictLabel(item.name);
       setDistrictId(item.id);
-      setWardName('')
-      await getWardList(item.id)
-    }else{
+      setWardName('');
+      await getWardList(item.id);
+    } else {
       setWardName(item.name);
     }
   };
-  const onHandleSelectDate = () =>{
-
-  }
-  const changeFilterDate = (date) =>{
+  const onHandleSelectDate = () => {};
+  const changeFilterDate = date => {
     if (filterDate.mode == PICKER_MODE.date && filterDate.val) {
       date.setHours(filterDate.val.getHours());
       date.setMinutes(filterDate.val.getMinutes());
     }
     setFilterDate({show: false, val: date ? date : filterDate.val});
-    setBirthday(date)
-   
-  }
-  console.log('birthday------------------',birthday)
-  const submitHandle = async () =>{
-    const action = authActions.updateDetail(cityLabel,fullName,birthday,cityLabel,districtLabel,wardName,'',cccd)
+    setBirthday(date);
+  };
+  const submitHandle = async () => {
+    const action = authActions.updateDetail(
+      cityLabel,
+      fullName,
+      birthday,
+      cityLabel,
+      districtLabel,
+      wardName,
+      '',
+      cccd,
+    );
     setError(null);
-    setIsLoading(true)
-    try{
+    setIsLoading(true);
+    try {
       await dispatch(action);
       setIsLoading(false);
-      navigation.goBack()
-    }catch(err){
-      Alert.alert('An Error Occurred!', err.message, [{ text: 'Okay' }]);
+      navigation.goBack();
+    } catch (err) {
+      Alert.alert('An Error Occurred!', err.message, [{text: 'Okay'}]);
       setError(err);
       setIsLoading(false);
     }
-}
+  };
   function renderHeader() {
     return (
       <Header
@@ -272,7 +260,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
             color: COLORS.primaryALS,
           }}
           onChange={text => {
-            setFullName(text)
+            setFullName(text);
           }}
           //  errMsg={emaiError}
           appendComponent={
@@ -311,7 +299,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
             icon={icons.calendar}
             containerStyle={{
               borderRadius: SIZES.radius,
-              paddingHorizontal:SIZES.padding,
+              paddingHorizontal: SIZES.padding,
               height: 55,
               backgroundColor: COLORS.lightGray2,
               borderWidth: 1,
@@ -321,9 +309,11 @@ const UpdateProfileScreen = ({navigation, route}) => {
             iconStyle={{
               width: 15,
               height: 15,
-              tintColor: COLORS.green
+              tintColor: COLORS.green,
             }}
-            onPress={() => setFilterDate({...filterDate, mode: PICKER_MODE.date, show: true})}
+            onPress={() =>
+              setFilterDate({...filterDate, mode: PICKER_MODE.date, show: true})
+            }
           />
         </View>
         {/* Gioi tinh */}
@@ -343,43 +333,40 @@ const UpdateProfileScreen = ({navigation, route}) => {
               customContainerStyle={{
                 flex: 1,
               }}
-              iconStyle={
-                {
-                  tintColor:  COLORS.primaryALS
-                }
-             
-              }
+              iconStyle={{
+                tintColor: COLORS.primaryALS,
+              }}
               label="Nam"
-              isSelected={sex===0?true : false}
-              onPress={()=>{setSex(0)}}
+              isSelected={sex === 0 ? true : false}
+              onPress={() => {
+                setSex(0);
+              }}
             />
             <TextRadioButton
               customContainerStyle={{
                 flex: 1,
               }}
-              iconStyle={
-                {
-                  tintColor:  COLORS.primaryALS
-                }
-             
-              }
+              iconStyle={{
+                tintColor: COLORS.primaryALS,
+              }}
               label="Nữ"
-              isSelected={sex===1?true : false}
-              onPress={()=>{setSex(1)}}
+              isSelected={sex === 1 ? true : false}
+              onPress={() => {
+                setSex(1);
+              }}
             />
             <TextRadioButton
               customContainerStyle={{
                 flex: 1,
               }}
-              iconStyle={
-                {
-                  tintColor:  COLORS.primaryALS
-                }
-             
-              }
-              isSelected={sex===2?true : false}
+              iconStyle={{
+                tintColor: COLORS.primaryALS,
+              }}
+              isSelected={sex === 2 ? true : false}
               label="Khác"
-              onPress={()=>{setSex(2)}}
+              onPress={() => {
+                setSex(2);
+              }}
             />
           </View>
         </View>
@@ -399,7 +386,6 @@ const UpdateProfileScreen = ({navigation, route}) => {
             //  utils.validateEmail(text, setEmailError);
             // setEmail(text);
           }}
-          
           //  errMsg={emaiError}
           appendComponent={
             <View
@@ -411,8 +397,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
                 style={{
                   width: 20,
                   height: 20,
-                  tintColor:
-                  COLORS.green
+                  tintColor: COLORS.green,
                 }}
               />
             </View>
@@ -434,7 +419,6 @@ const UpdateProfileScreen = ({navigation, route}) => {
             //  utils.validateEmail(text, setEmailError);
             // setEmail(text);
           }}
-          
           //  errMsg={emaiError}
           appendComponent={
             <View
@@ -446,8 +430,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
                 style={{
                   width: 20,
                   height: 20,
-                  tintColor:
-                  COLORS.green
+                  tintColor: COLORS.green,
                 }}
               />
             </View>
@@ -465,7 +448,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
             color: COLORS.primaryALS,
           }}
           onChange={text => {
-            setCccd(text)
+            setCccd(text);
             //  utils.validateEmail(text, setEmailError);
             // setEmail(text);
           }}
@@ -593,29 +576,29 @@ const UpdateProfileScreen = ({navigation, route}) => {
           isVisible={showFilterModel}
           onPress={onHandlerFilter}
           onClose={() => setShowFilterModel(false)}
-          address={target === 'city' ? city : target==='ward'? ward : district}
+          address={
+            target === 'city' ? city : target === 'ward' ? ward : district
+          }
           onSelect={onSelect}
           target={target}
         />
       )}
-       {
-            filterDate.show && (
-              <DatePicker
-                modal
-                mode={filterDate.mode}
-                open={filterDate.show}
-                //date={filterDate.val}
-                onConfirm={changeFilterDate}
-                onCancel={() => setFilterDate({...filterDate, show: false})}
-                //  minimumDate={new Date(2000, 1, 1)}
-                //  maximumDate={new Date()}
-                locale={"en"}
-                textColor={COLORS.black}
-                date={date}
-      onDateChange={onDateChange}
-              />
-            )
-          }
+      {filterDate.show && (
+        <DatePicker
+          modal
+          mode={filterDate.mode}
+          open={filterDate.show}
+          //date={filterDate.val}
+          onConfirm={changeFilterDate}
+          onCancel={() => setFilterDate({...filterDate, show: false})}
+          //  minimumDate={new Date(2000, 1, 1)}
+          //  maximumDate={new Date()}
+          locale={'en'}
+          textColor={COLORS.black}
+          date={date}
+          onDateChange={onDateChange}
+        />
+      )}
       {renderFooter()}
     </View>
   );
