@@ -144,6 +144,9 @@ const Notification = ({navigation}) =>{
         refreshing={isRefreshing}
         onRefresh={()=>getNotificationList()}
         keyExtractor={item=>`Notification-${item.id}}`}
+        contentContainerStyle={{
+          paddingBottom:60
+        }}
         renderItem={({item,index})=>{
           return(
             <NotificationItem

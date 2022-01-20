@@ -24,10 +24,12 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useToast} from 'react-native-toast-notifications';
 import {useSelector, useDispatch} from 'react-redux';
 import * as authAction from '../../stores/actions/auth';
+import QRCode from 'react-native-qrcode-svg';
 import api from '../../utils/apiHelper'
 const Setting = ({navigation, route}) => {
   const dispatch = useDispatch();
   const userName = useSelector(state=>state.auth.userName)
+  const userId = useSelector(state=>state.auth.userId)
   const toast = useToast();
   const options = {
     title: 'Select Image',
@@ -113,7 +115,7 @@ const Setting = ({navigation, route}) => {
   function renderProfileSection() {
     return (
       <View style={style.profileSectionContainer}>
-        <ProfileValue icon={icons.profile} label="Huy" value="By Huy" />
+        <ProfileValue icon={icons.profile} label="Huy" value="Thay đổi thông tin cá nhân" onPress={()=>navigation.navigate('UpdateProfile')} />
         <LineDivider />
         <ProfileValue
           icon={icons.email}
@@ -221,6 +223,24 @@ const Setting = ({navigation, route}) => {
       </View>
     );
   }
+  function renderQrcode(){
+    return(
+      <View
+        style={{
+          width:'100%',
+          marginTop:SIZES.radius,
+          justifyContent:'center',
+          alignItems:'center',
+          height:140
+        }}
+      >
+                  <QRCode
+  value={userId}
+  size={120}
+      />
+      </View>
+    )
+  }
   return (
     <View
       style={{
@@ -234,12 +254,14 @@ const Setting = ({navigation, route}) => {
           height: Platform.OS == 'ios' ? 90 : 60,
           backgroundColor: COLORS.white,
         }}></View>
-      {renderProfileCard()}
-      <ScrollView
+     <ScrollView
         contentContainerStyle={{
           paddingHorizontal: SIZES.padding,
           paddingBottom: 150,
         }}>
+      {renderProfileCard()}
+      {renderQrcode()}
+     
         {renderProfileSection()}
       </ScrollView>
     </View>

@@ -5,6 +5,8 @@ const bill = require('../assets/icons/bill.png');
 const coupon = require('../assets/icons/coupon.png');
 const cross = require('../assets/icons/cross.png');
 const cart = require('../assets/icons/cart.png');
+const check_on = require('../assets/icons/check_on.png');
+const check_off = require('../assets/icons/check_off.png');
 const call = require('../assets/icons/call.png');
 const close = require('../assets/icons/close.png');
 const camera = require('../assets/icons/camera.png');
@@ -82,6 +84,8 @@ export default {
   camera,
   defaultUser,
   call,
+  check_on,
+  check_off,
   menu,
   search,
   filter,

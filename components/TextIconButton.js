@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TouchableOpacity,Image,StyleSheet } from "react-native";
-import {  COLORS,Text } from "../constants";
+import {  COLORS,SIZES,Text } from "../constants";
 
 const TextIconButton = ({
     containerStyle,
@@ -17,9 +17,11 @@ const TextIconButton = ({
                 flexDirection:'row',
                 alignItems:'center',
                 justifyContent:'center',
+                paddingHorizontal:SIZES.radius,
                 ...containerStyle
             }}
             onPress={onPress}
+            
         >
             {iconPostion=="LEFT" && 
             <Image
@@ -29,7 +31,7 @@ const TextIconButton = ({
                     ...iconStyle
                 }}
             />}
-            <Text style={{...labelStyle}} body3>{label}</Text>
+            <Text style={{...labelStyle,flex:1}} body3>{label}</Text>
             {iconPostion=="RIGHT" && 
             <Image
                 source={icon}

@@ -17,7 +17,9 @@ const FormInput = ({
   autoCapitalize,
   containerStyle,
   inputValue = '',
-  inputContainerStyle
+  onFocus,
+  inputContainerStyle,
+  ediable = true
 }) => {
   return (
     <View
@@ -58,6 +60,8 @@ const FormInput = ({
             flex: 1,
             ...inputStyle,
           }}
+          editable={ediable}
+          onFocus={onFocus}
           value={inputValue}
           keyboardType={keyboardType}
           placeholder={placeHolder}

@@ -160,7 +160,7 @@ const onSelectOrderHandler = item =>{
           containerStyle={{
             borderRadius: SIZES.radius,
             height: 55,
-            width: 90,
+            width: 100,
             backgroundColor: isActiveSelector ? COLORS.primaryALS : null,
             borderWidth: 1,
             borderColor: isActiveSelector

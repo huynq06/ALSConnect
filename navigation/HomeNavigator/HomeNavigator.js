@@ -22,6 +22,7 @@ import ScanScreen from "../../screens/Scan/ScanScreen";
 import ScanDetailScreen from "../../screens/Scan/ScanDetail/ScanDetailScreen";
 import ImagePickerScreen from "../../screens/Setting/ImagePicker/ImagePickerScreen";
 import InvoiceScreen from "../../screens/Invoice/InvoiceScreen";
+import UpdateProfileScreen from "../../screens/UpdateProfile/UpdateProfileScreen";
 const Stack = createNativeStackNavigator();
 const defaultNavOptions = {
     headerStyle: {
@@ -71,6 +72,7 @@ const HomeNavigator = ({navigation,token})=>{
              <Stack.Screen name="ScanDetail" component={ScanDetailScreen} />
              <Stack.Screen name="ImagePicker" component={ImagePickerScreen} />
              <Stack.Screen name="Invoice" component={InvoiceScreen} />
+             <Stack.Screen name="UpdateProfile" component={UpdateProfileScreen} />
            
         </Stack.Navigator>
     )

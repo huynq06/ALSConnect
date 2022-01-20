@@ -8,6 +8,7 @@ import {
   FlatList,
   ActivityIndicator,
   Alert,
+  Keyboard,
   Animated,
   Platform,
 } from 'react-native';
