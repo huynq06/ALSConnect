@@ -81,23 +81,27 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
       <View
         style={{
           flex: 1,
-          //   justifyContent:'center',
-          //   alignItems:'center',
+         //   justifyContent:'center',
+           //  alignItems:'center',
 
-          marginTop: SIZES.padding,
+      
           // height:200,
           //backgroundColor:COLORS.green
         }}>
         <View
           style={{
             alignItems: 'center',
-            marginHorizontal: SIZES.padding,
+          //  width: 220,
+           //   height: 150,
+            //marginHorizontal: SIZES.padding,
           }}>
           <Image
             source={images.logoALS_full}
+            resizeMode='contain'
             style={{
-              width: 110,
-              height: 60,
+              width: 220,
+              height: 150,
+            //  tintColor:COLORS.lightGray1
             }}
           />
         </View>
@@ -108,7 +112,6 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
             borderWidth: 1,
             borderColor: COLORS.orange,
             marginHorizontal: SIZES.padding,
-            marginTop: SIZES.padding,
             padding: SIZES.radius,
             flexDirection: 'row',
             justifyContent: 'center',
@@ -389,7 +392,7 @@ const ImportAwbDetailScreen = ({navigation, route}) => {
           paddingHorizontal: SIZES.padding,
            marginTop: Platform.OS=='ios'? SIZES.padding : 0,
           alignItems: 'center',
-          backgroundColor: COLORS.primaryALS,
+          backgroundColor: COLORS.white,
           //   borderBottomRightRadius:SIZES.radius*2
         }}
         title="AWB Import DETAILS"

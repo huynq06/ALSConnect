@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
   Platform,
+  Linking
 } from 'react-native';
 import LineDivider from '../../components/LineDivider';
 import {
@@ -134,6 +135,7 @@ const Setting = ({navigation, route}) => {
           icon={icons.call}
           label="Contact Number"
           value="0983833193"
+          onPress={()=>{Linking.openURL('tel:119')}}
         />
         <LineDivider />
         <ProfileValue

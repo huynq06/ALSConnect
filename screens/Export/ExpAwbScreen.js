@@ -44,9 +44,9 @@ const ExpAwbScreen = ({navigation, route}) => {
   const [isFavourite,setIsFavourite] = useState(labsLoaded?.isFavourite)
   const dispatch = useDispatch();
   const toast = useToast();
-  useEffect(() => {
-    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-  }, []);
+  // useEffect(() => {
+  //   LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  // }, []);
   const loadLabs = useCallback(
     async (text) => {
       setError(null);
@@ -195,30 +195,15 @@ useEffect(()=>{
       />
     );
   }
-  function renderLabs() {
-    return (
-      loading ? (
-        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-          <ActivityIndicator size="large" color={COLORS.primaryALS} />
-        </View>
-      ) : <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={isRefreshing}
-          onRefresh={()=>loadLabs(searchText)}
-        />
-      }
-        style={{
-          backgroundColor: COLORS.white,
-          marginTop: SIZES.base,
-        }}>
-        {/* thong tin chung */}
-        <View
+  function renderAwbDetail(){
+    return(
+      <View>
+         <View
           style={{
             paddingVertical: SIZES.base,
-            marginHorizontal: SIZES.padding,
             backgroundColor: COLORS.white,
             flexDirection: 'row',
+            marginHorizontal: SIZES.padding,
           }}>
           <Text
             style={{
@@ -284,8 +269,8 @@ useEffect(()=>{
           style={{
             flexDirection: 'row',
             backgroundColor: COLORS.white,
-            marginHorizontal: SIZES.padding,
             marginTop: SIZES.radius,
+            marginHorizontal: SIZES.padding,
           }}>
           <Text
             style={{
@@ -308,8 +293,8 @@ useEffect(()=>{
             flexDirection: 'row',
             height: 30,
             backgroundColor: COLORS.white,
-            marginHorizontal: SIZES.padding,
             marginTop: SIZES.radius,
+            marginHorizontal: SIZES.padding,
           }}>
           <Text
             style={{
@@ -331,8 +316,8 @@ useEffect(()=>{
             flexDirection: 'row',
             height: 30,
             backgroundColor: COLORS.white,
-            marginHorizontal: SIZES.padding,
             marginTop: SIZES.radius,
+            marginHorizontal: SIZES.padding,
           }}>
           <Text
             style={{
@@ -354,8 +339,8 @@ useEffect(()=>{
             flexDirection: 'row',
             height: 30,
             backgroundColor: COLORS.white,
-            marginHorizontal: SIZES.padding,
             marginTop: SIZES.radius,
+            marginHorizontal: SIZES.padding,
           }}>
           <Text
             style={{
@@ -376,8 +361,8 @@ useEffect(()=>{
           style={{
             flexDirection: 'row',
             backgroundColor: COLORS.white,
-            marginHorizontal: SIZES.padding,
             marginTop: SIZES.radius,
+            marginHorizontal: SIZES.padding,
           }}>
           <Text
             style={{
@@ -399,8 +384,8 @@ useEffect(()=>{
             flexDirection: 'row',
             height: 30,
             backgroundColor: COLORS.white,
-            marginHorizontal: SIZES.padding,
             marginTop: SIZES.radius,
+            marginHorizontal: SIZES.padding,
           }}>
           <Text
             style={{
@@ -418,6 +403,12 @@ useEffect(()=>{
           </Text>
         </View>
         <LineDivider />
+        <View
+          style={{
+            height:5,
+            backgroundColor:COLORS.lightGray1
+          }}
+        ></View>
         <TouchableOpacity
         onPress={()=>{
           navigation.navigate('AwbTracking',{
@@ -427,8 +418,8 @@ useEffect(()=>{
          })}}
           style={{
             flexDirection: 'row',
-            paddingHorizontal: SIZES.padding,
             paddingVertical: SIZES.padding,
+            marginHorizontal: SIZES.padding,
           }}>
           <Image
             source={icons.baby_car}
@@ -456,6 +447,12 @@ useEffect(()=>{
           />
         </TouchableOpacity>
         <LineDivider />
+        <View
+          style={{
+            height:5,
+            backgroundColor:COLORS.lightGray1
+          }}
+        ></View>
         <TouchableOpacity
            onPress={()=>{navigation.navigate('AwbCustomTracking',{
             labId: labIdent,
@@ -463,8 +460,9 @@ useEffect(()=>{
            })}}
           style={{
             flexDirection: 'row',
-            paddingHorizontal: SIZES.padding,
-            paddingVertical: SIZES.padding,
+            paddingVertical: SIZES.radius,
+            marginBottom:SIZES.radius,
+            marginHorizontal: SIZES.padding,
           }}>
           <Image
             source={icons.profile}
@@ -494,47 +492,95 @@ useEffect(()=>{
         <LineDivider />
         <View
           style={{
+            height:5,
+            backgroundColor:COLORS.lightGray1,
+            marginBottom:SIZES.padding
+          }}
+        ></View>
+      </View>
+    )
+  }
+  function renderLabs() {
+    return (
+      loading ? (
+        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+          <ActivityIndicator size="large" color={COLORS.primaryALS} />
+        </View>
+      ) : <View
+        style={{
+          backgroundColor: COLORS.white,
+          marginTop: SIZES.base,
+        }}>
+        {/* thong tin chung */}
+       
+        <View
+          style={{
             paddingVertical: SIZES.base,
-            marginHorizontal: SIZES.padding,
-            backgroundColor: COLORS.white,
+          
           }}>
-          <Text
+            <View
+              style={{
+                marginHorizontal:SIZES.padding
+              }}
+            >
+            <Text
             style={{
               ...FONTS.h3,
             }}>
             Thông tin chuyến bay
           </Text>
+            </View>
+        
           <FlatList
             numColumns={2}
-            //onRefresh={()=>loadFlights('','',dateWithSec(dateForFiltering))}
-            //refreshing={isRefreshing}
+            refreshing={isRefreshing}
+            onRefresh={()=>loadLabs(searchText)}
+            ListHeaderComponent={()=>{
+              return(
+                renderAwbDetail()
+              )
+              
+            }}
+            ListHeaderComponentStyle={{
+              paddingHorizontal:0
+            }}
+            listKey='Flights'
             data={labsLoaded?.flightExps}
             contentContainerStyle={{
               marginTop: SIZES.padding,
-              marginHorizontal: SIZES.padding,
               marginBottom: 20,
-              backgroundColor: COLORS.white,
+              //paddingHorizontal:SIZES.padding
             }}
             ListFooterComponent={() => {
               return (
                 <View
                   style={{
-                    height: 15,
+                    height: 200,
                   }}></View>
               );
             }}
+
             columnWrapperStyle={{justifyContent: 'space-between'}}
             keyExtractor={item => item.id}
-            renderItem={itemData => (
-              <FlightExportItem
-                id={itemData}
-                entity={itemData?.item}
-                //onToggleFavourite = {toggleFavoriteHandler}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item,index}) => {
+              return(
+                <FlightExportItem
+                id={item}
+                entity={item}
+                customContainerStyle={{
+                  borderWidth:1,
+                  borderColor: COLORS.primaryALS,
+                  marginLeft: index%2==0? SIZES.radius: 0,
+                  marginRight: index%2==0? 0 : SIZES.radius
+                  //marginHorizontal:10
+                }}
               />
-            )}
+              )
+            }}
           />
         </View>
-      </ScrollView>
+      </View>
     );
   }
   function renderBody() {

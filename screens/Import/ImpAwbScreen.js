@@ -186,7 +186,8 @@ const ImpAwbScreen = ({navigation, route}) => {
           // eslint-disable-next-line react-native/no-inline-styles
           style={{
             alignItems: 'center',
-            //  backgroundColor:COLORS.yellow,
+              marginLeft:5,
+              paddingLeft:5,
             marginBottom: -5,
           }}>
           <TextInput

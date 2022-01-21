@@ -3,11 +3,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  Picker,
-  Image,
-  TouchableOpacity,
   ActivityIndicator,
-  SafeAreaView,
   LogBox,
   Platform
 } from 'react-native';
@@ -20,16 +16,10 @@ import {
   icons,
   constants,
 } from '../../../constants';
-import LineDivider from '../../../components/LineDivider';
 import moment from 'moment';
 import {useSelector, useDispatch} from 'react-redux';
 import Header from '../../../components/Header';
-import LinearGradient from 'react-native-linear-gradient';
-import IconLabel from '../../../components/IconLabel';
 import TextButton from '../../../components/TextButton';
-import {SwipeListView} from 'react-native-swipe-list-view';
-import IconButton from '../../../components/IconButton';
-import * as cartLagiAction from '../../../stores/actions/cartLagi';
 import * as orderAction from '../../../stores/actions/orderLagi';
 /* import DateFilter from '../../../components/DateFilter'; */
 import TextIconButton from '../../../components/TextIconButton';
@@ -43,14 +33,13 @@ import {
   back30days,
   isYesterday,
   isToday,
-  dateWithTime
 } from '../../../utils/dateHelpers';
 import Calendar from '../../../components/Calendar/Calendar';
 import OrderHistory from '../../../components/OrderHistory';
 const OrderLagiScreen = ({navigation, route}) => {
-  useEffect(() => {
-    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-}, [])
+//   useEffect(() => {
+//     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+// }, [])
   const dispatch = useDispatch();
   const [dateForFiltering, setDateForFiltering] = useState(startOfDay);
   const [isLoading, setIsLoading] = useState(false);
@@ -295,7 +284,7 @@ const onSelectOrderHandler = item =>{
         date={dateForFiltering}
         withoutPadding
       />
-     <ScrollView style={{flex: 1}}>
+     <View style={{flex: 1}}>
       {renderOrderHistory()}
       <View
                             style={{
@@ -304,7 +293,7 @@ const onSelectOrderHandler = item =>{
                                // backgroundColor:COLORS.red
                             }}
                            ></View>
-      </ScrollView>
+      </View>
       {/* Order History */}
      
     </View>
